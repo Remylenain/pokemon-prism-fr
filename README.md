@@ -6,6 +6,8 @@ Updates are issued through the developer-run Pokémon Prism [subreddit](https://
 
 To set up the repository, see [**INSTALL.md**](INSTALL.md).
 
+[rainbow]: https://twitter.com/rainbowdevs
+
 ---
 
 ## 🇫🇷 French Fan Translation
@@ -22,4 +24,21 @@ The translated build will remain compatible with the original gameplay.
 
 > ℹ️ Note: This project is not affiliated with RainbowDevs or Game Freak. It is a non-commercial fan initiative.
 
-[rainbow]: https://twitter.com/rainbowdevs
+---
+
+## 🇫🇷 Traduction française
+
+Ce dépôt contient une **traduction en français** du jeu *Pokémon Prism*, réalisée par la communauté.
+
+La traduction est **en cours de développement**. Le projet est public à des fins de transparence, mais **les contributions sont restreintes** pour préserver la qualité et la cohérence.
+
+🔒 **Seul le mainteneur de ce dépôt a la possibilité de modifier les branches**.
+
+Si vous repérez une erreur ou souhaitez proposer une amélioration :
+- Ouvrez une **issue**
+- Ou soumettez une **pull request** — elle sera examinée avec attention.
+
+---
+
+🧪 **Branche active** pour la traduction : `traduction-fr`  
+📦 **Branche `main`** : base originale, non modifiée.
