@@ -1,0 +1,62 @@
+CadenceGroup:
+	; CadenceGroup 1
+	db "Cadence@"
+
+	db TRAINERTYPE_MOVES
+
+	db 43, MISMAGIUS
+		db NOISE_PULSE
+		db SHADOW_BALL
+		db THUNDERBOLT
+		db POWER_GEM
+
+	db 43, MAGNEZONE
+		db NOISE_PULSE
+		db SCREECH
+		db TRI_ATTACK
+		db THUNDER_WAVE
+
+	db 45, WIGGLYTUFF
+		db NOISE_PULSE
+		db SING
+		db MOONBLAST
+		db ENDURE
+
+	db 48, EXPLOUD
+		db NOISE_PULSE
+		db SCREECH
+		db SUPERSONIC
+		db 0
+
+	db -1
+
+	; 2
+	db "Cadence@"
+
+	db TRAINERTYPE_MOVES
+
+	db 50, MISMAGIUS
+		db HYPER_VOICE
+		db SHADOW_BALL
+		db THUNDERBOLT
+		db POWER_GEM
+
+	db 52, MAGNEZONE
+		db NOISE_PULSE
+		db SCREECH
+		db TRI_ATTACK
+		db THUNDER_WAVE
+
+	db 53, WIGGLYTUFF
+		db HYPER_VOICE
+		db SING
+		db MOONBLAST
+		db ENDURE
+
+	db 54, EXPLOUD
+		db NOISE_PULSE
+		db SCREECH
+		db SUPERSONIC
+		db BASS_TREMOR
+
+	db -1

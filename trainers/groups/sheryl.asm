@@ -1,0 +1,37 @@
+SherylGroup:
+	; 1
+	db "Sheryl@"
+
+	db TRAINERTYPE_MOVES
+
+	db 75, SLOWBRO
+		db CALM_MIND
+		db SURF
+		db PSYCHIC_M
+		db REST
+
+	db 75, EXEGGUTOR
+		db PSYCHIC_M
+		db SLEEP_POWDER
+		db GIGA_DRAIN
+		db NO_MOVE
+
+	db 76, ESPEON
+		db PSYCHIC_M
+		db LIGHT_SCREEN
+		db CALM_MIND
+		db SHADOW_BALL
+
+	db 77, ALAKAZAM
+		db COUNTER
+		db PSYCHIC_M
+		db SIGNAL_BEAM
+		db RECOVER
+
+	db 79, SLOWKING
+		db CALM_MIND
+		db PSYCHIC_M
+		db SURF
+		db THUNDER_WAVE
+
+	db -1

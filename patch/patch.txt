@@ -1,0 +1,56 @@
+; variables
+	define zero,       0
+	define r0,       100
+	define r1,       101
+	define a,        201
+	define b,        202
+	define c,        203
+	define d,        204
+	define e,        205
+	define patch,    243
+	define message,  244
+	define savefile, 245
+	define build,    246
+	define lowseed,  247
+	define highseed, 248
+	define source,   249
+	define target,   250
+	define address,  251
+	define banks,    252
+	define length,   253
+	define temp,     254
+	define result,   255
+
+	include "constants.txt"
+
+	include "main.txt"
+	include "detection.txt"
+	include "version_selections.txt"
+	include "patching.txt"
+	include "gbs.txt"
+	include "util.txt"
+	include "random.txt"
+	include "sha1sum.txt"
+	include "savefile.txt"
+	include "save_patches.txt"
+	include "save_patch_list.txt"
+	include "save_patch_utils.txt"
+	include "pokemon_functions.txt"
+	include "item_functions.txt"
+	include "gold_token_patch.txt"
+	include "pokecenter_check.txt"
+	include "apply_party_patches.txt"
+	include "experience.txt"
+	include "lol.txt"
+
+LOLPatch: incbin "lol.ips"
+
+CrystalPatch: incbin "crystal.ips"
+DebugPatch: incbin "_debug.ips"
+ReleasePatch: incbin "_release.ips"
+PrismPatch: incbin "_xorpatch.bin"
+GBSPatch: incbin "_gbspatch.bin"
+
+VersionInfo: include "_version.txt"
+
+PrismHashes: include "_hashes.txt"

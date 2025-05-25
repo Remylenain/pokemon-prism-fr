@@ -1,0 +1,18 @@
+MagnetonEvosAttacks:
+	db EVOLVE_MAPGROUP
+	map POWER_PLANT_LOBBY, POWER_PLANT_1F, POWER_PLANT_2F, POWER_PLANT_3F, 
+	db -1, MAGNEZONE
+	db 0 ; no more evolutions
+	db 1, BARRIER
+	db 1, SPARK
+	db 1, IRON_HEAD
+	db 1, SWIFT
+	db 1, MIND_READER
+	db 32, ZAP_CANNON
+	db 36, FLASH_CANNON
+	db 40, IRON_DEFENSE
+	db 44, TRI_ATTACK
+	db 48, THUNDERBOLT
+	db 52, WILD_CHARGE
+	db 58, METALLURGY
+	db 0 ; no more level-up moves

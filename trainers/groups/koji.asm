@@ -1,0 +1,37 @@
+KojiGroup:
+	; 1
+	db "Koji@"
+
+	db TRAINERTYPE_MOVES
+
+	db 59, HARIYAMA
+		db CROSS_CHOP
+		db ROCK_SLIDE
+		db DYNAMICPUNCH
+		db BULK_UP
+
+	db 60, GALLADE ; Sharpness
+		db ICE_PUNCH
+		db SWORDS_DANCE
+		db WILL_O_WISP
+		db PSYCHO_CUT
+
+	db 61, HITMONLEE
+		db EARTHQUAKE
+		db MACH_PUNCH
+		db SUBSTITUTE
+		db HI_JUMP_KICK
+
+	db 61, HITMONCHAN
+		db FIRE_PUNCH
+		db ICE_PUNCH
+		db THUNDERPUNCH
+		db DRAIN_PUNCH
+
+	db 63, MACHAMP
+		db BULK_UP
+		db BULLET_PUNCH
+		db DYNAMICPUNCH
+		db COUNTER
+
+	db -1

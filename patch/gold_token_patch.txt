@@ -1,0 +1,360 @@
+GoldTokenPatch:
+	call CountGoldTokensReceived
+	push #result
+	set #1, GOLD_TOKEN
+	set #2, POCKET_ITEMS
+	call CountItems
+	pop #temp
+	set #1, #zero
+	subborrow #result, #1, #temp, #result
+	jumpnz #1, .cheater
+	push #result
+	set #1, .gift_mon_event_flags
+	call CountEventFlags
+	shiftleft #result, 3
+	pop #temp
+	subtract #result, #temp, #result
+	push #result
+	set #1, EVENT_FLAGS_OFFSET
+	call GetGameDataPointer
+	seek #result
+	set #1, EVENT_HAS_QR_READER
+	set #2, -1
+	call FlagAction
+	set #temp, #result
+	pop #result
+	jumpz #temp, .no_QR_reader
+	subtract #result, 5
+.no_QR_reader
+	shiftrightarith #temp, #result, 31 ; #temp = 0 if #result is positive or -1 if #result is negative
+	jumpnz #temp, .refund_cheater
+	jumpz #result, .do_patch
+	set #1, GOLD_TOKEN
+	set #2, #result
+	set #3, POCKET_ITEMS
+	push #result
+	call GiveItems
+	pop #temp
+	jumpnz #result, .refund_error
+	call .print_refund_message
+.do_patch
+	set #1, AMULET_COIN
+	set #2, POCKET_ITEMS
+	set #3, .amulet_coins_text
+	call GoldTokenPatch_RemoveItemsAndPrintMessage
+	set #1, OLD_ROD
+	set #2, POCKET_KEY_ITEMS
+	set #3, .old_rods_text
+	call GoldTokenPatch_RemoveItemsAndPrintMessage
+	set #1, RED_FLUTE
+	set #2, POCKET_ITEMS
+	set #3, .red_flutes_text
+	call GoldTokenPatch_RemoveItemsAndPrintMessage
+	set #1, YELLOW_FLUTE
+	set #2, POCKET_ITEMS
+	set #3, .yellow_flutes_text
+	call GoldTokenPatch_RemoveItemsAndPrintMessage
+	set #1, CORONETSTONE
+	set #2, POCKET_ITEMS
+	set #3, .coronet_stones_text
+	call GoldTokenPatch_RemoveItemsAndPrintMessage
+	set #1, 1
+	set #2, #1
+	call CheckBingoPrizeWasAwarded
+	jumpz #result, .no_metal_powder
+	set #1, METAL_POWDER
+	set #2, 1
+	set #3, POCKET_ITEMS
+	call GiveItems
+	set #1, .metal_powder_text
+	jumpnz #result, .error_awarding_bingo_prize
+	call .print_bingo_award_message
+.no_metal_powder
+	set #1, 2
+	set #2, 5
+	call CheckBingoPrizeWasAwarded
+	jumpz #result, .no_red_flute
+	set #1, RED_FLUTE
+	set #2, 1
+	set #3, POCKET_ITEMS
+	call GiveItems
+	set #1, .red_flute_text
+	jumpnz #result, .error_awarding_bingo_prize
+	call .print_bingo_award_message
+.no_red_flute
+	set #1, .events_to_clear
+	set #2, #zero
+	call EventFlagPatch
+	jump FixSavefileChecksum
+
+.print_refund_message
+	bufstring .refund_total_text_1
+	bufnumber #temp
+	bufstring .refund_total_text_2
+	printbuf
+	jumpz #1, .no_tokens_in_pack
+	bufnumber #1
+	bufstring .added_to_place_text
+	bufstring .pack_text
+	jumpz #2, .done_refund_message
+	bufstring .comma_and_text
+.no_tokens_in_pack
+	bufnumber #2
+	bufstring .added_to_place_text
+	bufstring .PC_text
+.done_refund_message
+	bufchar 0x2e ;full stop
+	printbuf
+	return
+
+.print_bingo_award_message
+	bufstring .have_been_awarded_text
+	bufstring #1
+	bufstring .bingo_prize_put_in_place_text
+	set #1, .pack_text
+	jumpz #2, .continue_bingo_award_message
+	set #1, .PC_text
+.continue_bingo_award_message
+	bufstring #1
+	jump .done_refund_message
+
+.refund_error
+	bufstring .refund_error_text_1
+	bufnumber #temp
+	bufstring .refund_error_text_2
+	bufnumber #result
+	bufstring .refund_error_text_3
+.handle_error
+	printbuf
+	print .make_some_room_text
+	exit 1
+
+.error_awarding_bingo_prize
+	bufstring .have_been_awarded_text
+	bufstring #1
+	bufstring .prize_error_text
+	jump .handle_error
+
+.refund_cheater
+	multiply #result, #temp
+	bufstring .refund_cheater_text_1
+	bufnumber #result
+	bufstring .refund_cheater_text_2
+	jump .handle_cheater
+
+.cheater
+	subtract #result, #zero, #result
+	bufstring .cheater_text_1
+	bufnumber #result
+	bufstring .cheater_text_2
+.handle_cheater
+	printbuf
+	menu #result, YesNoMenu
+	jumpz #result, .do_patch
+	exit #result ; = 1
+
+.gift_mon_event_flags
+	dh EVENT_PROF_JEN_PROF_1
+	dh EVENT_PROF_JEN_PROF_2
+	dh -1
+
+.events_to_clear
+	dh EVENT_MILOS_CATACOMBS_RAZOR_FANG
+	dh EVENT_MILOS_B2F_ITEM_RAZOR_CLAW
+	dh -1
+
+.refund_total_text_1
+	string "You were refunded "
+.refund_total_text_2
+	string " Gold Token(s)!"
+.added_to_place_text
+	string " token(s) were added to your "
+.comma_and_text
+	string ", and"
+.pack_text
+	string "pack"
+.PC_text
+	string "PC"
+.amulet_coins_text
+	string "Amulet Coin(s)"
+.old_rods_text
+	string "Old Rod(s)"
+.red_flute_text
+	string "Red Flute"
+.red_flutes_text
+	string "Red Flute(s)"
+.yellow_flutes_text
+	string "Yellow Flute(s)"
+.coronet_stones_text
+	string "CoronetStone(s)"
+.metal_powder_text
+	string "Metal Powder"
+.refund_error_text_1
+	string "Your Gold Token refund comes out to "
+.refund_error_text_2
+	string " token(s), which is "
+.refund_error_text_3
+	string " more than you have room for."
+.have_been_awarded_text
+	string "You have been awarded one "
+.bingo_prize_put_in_place_text
+	string " for having completed a Bingo line! The prize was put in your "
+.prize_error_text
+	string " for having completed a Bingo line, but you do not have room for it in your pack or PC."
+.make_some_room_text
+	string "Please make some room in your pack and/or PC and try again."
+.cheater_text_1
+	string "You currently have "
+.cheater_text_2
+	string " Gold Token(s) more than you legitimately received in-game. Continue patching?"
+.refund_cheater_text_1
+	string "Your Gold Token refund would come out as -"
+.refund_cheater_text_2
+	string " token(s). Continue patching?"
+
+CountGoldTokensReceived:
+	set #1, .quadruple_token_flags
+	call CountEventFlags
+	push #result
+	set #1, .single_token_flags
+	call CountEventFlags
+	pop #temp
+	mulacum #result, #temp, 4
+	return
+
+.single_token_flags
+	dh EVENT_CAPER_MART_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_HAPPINESS_RATER_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_HEATH_GYM_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_LAUREL_CITY_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_TORENIA_MART_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_68_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_69_SOUTH_GATE_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_70_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_71_WEST_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_72_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_73_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_74_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_75_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_76_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_77_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_79_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_82_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_83_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_84_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ACQUA_TUTORIAL_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_LAUREL_FOREST_GATES_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_CLATHRITE_B2F_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_SEASHORE_GYM_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_GRAVEL_TOWN_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_MERSON_CITY_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_HAYWARD_CITY_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_OWSAURI_GAME_CORNER_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_MORAGA_TOWN_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_JAERU_CITY_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_BOTAN_CITY_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_CASTRO_VALLEY_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_CASTRO_MANSION_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_EAGULOU_CITY_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_RIJON_LEAGUE_OUTSIDE_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_47_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_48_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_49_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_50_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_51_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_52_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_53_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_54_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_55_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_56_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_57_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_58_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_59_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_60_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_POWER_PLANT_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_61_GATE_NORTH_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_62_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_63_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_64_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_65_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_66_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_67_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_MERSON_CAVE_B2F_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_MT_BOULDER_B1F_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_SILK_TUNNEL_B5F_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_CASTRO_FOREST_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ILEX_FOREST_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_ROUTE_34_GATE_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_GOLDENROD_CITY_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_GOLDENROD_CAPE_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_TUNOD_WATERWAY_HIDDENITEM_GOLD_TOKEN
+	dh EVENT_FIRST_BINGO_CARD_GOLD_TOKEN
+	dh EVENT_SECOND_BINGO_CARD_GOLD_TOKEN
+	dh EVENT_THIRD_BINGO_CARD_GOLD_TOKEN
+	dh -1
+
+.quadruple_token_flags
+	dh EVENT_GOLDTOKENMAN_MILESTONE_1
+	dh EVENT_GOLDTOKENMAN_MILESTONE_2
+	dh EVENT_GOLDTOKENMAN_MILESTONE_3
+	dh EVENT_GOLDTOKENMAN_MILESTONE_4
+	dh EVENT_GOLDTOKENMAN_MILESTONE_5
+	dh EVENT_GOLDTOKENMAN_MILESTONE_6
+	dh EVENT_GOLDTOKENMAN_MILESTONE_7
+	dh EVENT_GOLDTOKENMAN_MILESTONE_8
+	dh -1
+
+GoldTokenPatch_RemoveItemsAndPrintMessage:
+	; #1: item, #2: pocket, #3: name
+	push #a
+	push #3
+	push #1
+	call RemoveAllInstancesOfItem
+	set #a, #result
+	set #1, ITEMS_OBTAINED_OFFSET
+	call GetGameDataPointer
+	seek #result
+	pop #1
+	decrement #1
+	set #2, #zero
+	call FlagAction
+	pop #3
+	set #result, #a
+	pop #a
+	retz #result
+	bufstring .part_of_patch_text
+	bufnumber #result
+	bufchar 0x20 ;space
+	bufstring #3
+	bufstring .were_removed_text
+	printbuf
+	return
+
+.part_of_patch_text
+	string "As part of the Gold Tokens redesign, "
+.were_removed_text
+	string " were removed from your pack, PC and/or held items."
+
+CheckBingoPrizeWasAwarded:
+	; #1: card, #2: line number
+	; returns nonzero if true or zero if false
+	push #1
+	push #2
+	set #1, BINGO_DATA_OFFSET
+	call GetGameDataPointer
+	seek #result
+	pop #2
+	pop #1
+	readbyte #result
+	ifgt #result, #1, .done
+	iflt #result, #1, .nope
+	readhalfword #result
+	decrement #2
+	shiftright #result, #2
+	and #result, 1
+.done
+	return
+
+.nope
+	set #result, #zero
+	return

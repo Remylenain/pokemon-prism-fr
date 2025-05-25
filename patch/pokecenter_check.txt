@@ -1,0 +1,89 @@
+PokecenterCheck:
+	set #1, MAP_GROUP_OFFSET
+	call GetGameDataPointer
+	seek #result
+	getfilehalfword #result
+
+	set #address, PokecenterUpdateTable
+	set #1, #zero
+	gethalfwordinc #temp, #address
+.update_loop
+	getwordinc #2, #address
+	ifge #build, #temp, .skip_update
+	gethalfwordinc #temp, #2
+.entry_loop
+	gethalfwordinc #3, #2
+	ifne #result, #temp, .skip_entry
+	increment #1
+	set #result, #3
+	jump .skip_update
+.skip_entry
+	gethalfwordinc #temp, #2
+	jumpnz #temp, .entry_loop
+.skip_update
+	gethalfwordinc #temp, #address
+	jumpnz #temp, .update_loop
+
+	set #address, .pokecenters
+.check_loop
+	gethalfwordinc #temp, #address
+	jumpz #temp, .not_in_pokecenter
+	ifne #temp, #result, .check_loop
+	retz #1
+	print .updated_pokecenter_string
+	writehalfword #result
+	jump FixSavefileChecksum
+
+.not_in_pokecenter
+	print .not_in_pokecenter_string
+	menu #temp, YesNoMenu
+	retz #temp
+	exit #temp
+
+.updated_pokecenter_string
+	string "You're currently in a Pokémon Center that has changed its internal map ID since your last update. You have been moved to the new location."
+
+.not_in_pokecenter_string
+	string "You are not currently inside a Pokémon Center. Remember that, in order to ensure patching is successful, you should be inside a Pokémon Center when patching your savefile and exit it immediately when you continue the game. Do you want to continue patching anyway?"
+
+.pokecenters
+	; map group, map number
+	db  2,  2 ;Caper
+	db  3,  2 ;Oxalis
+	db  4,  2 ;Spurge
+	db  6,  2 ;Laurel
+	db  7,  2 ;Torenia
+	db  8,  5 ;Phacelia
+	db  9,  2 ;Saxifrage
+	db 10,  2 ;Phlox
+	db 11,  2 ;Acania
+	db 21,  2 ;Route 77
+	db 25,  3 ;Route 81
+	db 44,  4 ;Merson
+	db 45, 10 ;Hayward
+	db 46,  5 ;Owsauri
+	db 47,  6 ;Moraga
+	db 48,  4 ;Jaeru
+	db 49,  3 ;Botan
+	db 50,  6 ;Castro
+	db 51,  7 ;Eagulou
+	db 73,  2 ;Route 67
+	db 81,  2 ;Azalea
+	db 84,  4 ;Goldenrod
+	db 85,  2 ;Saffron
+	db 86,  3 ;Olcan
+	db 89,  6 ;Southerly
+	dh 0
+
+PokecenterUpdateTable:
+	; for each build: build number and pointer
+	; for each table: old map ID, new map ID (or zero to mark a map that is not a Pokeḿon Center at all); old = 0 to end
+	dh 248
+	dw .build0248
+
+	dh 0
+
+.build0248
+	db 89,  6,  0,  0 ;Southerly (not a Center before 0248)
+	db 89,  5, 89,  6 ;updated Southerly center ID
+	dh 0

@@ -1,0 +1,66 @@
+DetectBase:
+	getfilehalfword #result
+	ifeq #result, 0x4b50, .zip
+	length #result
+	ifne #result, ROM_SIZE, .error
+	checksha1 #result, .crystal11
+	set #source, #zero
+	jumpz #result, .done
+	checksha1 #result, .crystal10
+	increment #source
+	jumpz #result, .done
+	set #address, PrismHashes
+	set #source, #zero
+.loop
+	checksha1 #result, #address
+	jumpz #result, .prism
+	add #address, HASH_SIZE
+	increment #source
+	iflt #source, 2, .loop
+.error
+	print InvalidROMMessage
+	exit 1
+
+.zip
+	print ZipFileMessage
+	exit 1
+
+.done
+	bufstring .base_message
+	bufstring .crystal_message
+	subtract #temp, 49, #source ;49 = '1'
+	bufchar #temp
+	printbuf
+	return
+
+.prism
+	bufstring .base_message
+	set #message, .prism_release_message
+	jumpz #source, .got_prism_message
+	set #message, .prism_debug_message
+.got_prism_message
+	bufstring #message
+	printbuf
+	increment #source
+	increment #source ;shorter than add #source, 2
+	return
+
+.base_message
+	string "Detected base: Pokémon "
+.crystal_message
+	string "Crystal v1."
+.prism_release_message
+	string "Prism (release ROM)"
+.prism_debug_message
+	string "Prism (debug ROM)"
+
+.crystal10
+	hexdata f4cd194bdee0d04ca4eac29e09b8e4e9d818c133
+.crystal11
+	hexdata f2f52230b536214ef7c9924f483392993e226cfb
+
+InvalidROMMessage:
+	string "Invalid base ROM. Please use a US version of Pokémon Crystal v1.0 or v1.1."
+
+ZipFileMessage:
+	string "The file seems to be a ZIP archive. Extract the ROM and try again."

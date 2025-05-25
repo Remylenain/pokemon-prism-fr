@@ -1,0 +1,48 @@
+name: build
+
+on: [pull_request, workflow_dispatch]
+
+env:
+  CC: gcc-10
+  CXX: g++-10
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Update and Install Software
+      run: |
+        sudo apt update
+        sudo ACCEPT_EULA=Y apt -y --fix-missing --allow-downgrades upgrade
+        sudo apt -y --allow-downgrades install make g++-10 bison git python python3-pip bison pkg-config libpng-dev
+        sudo pip install pypng
+    - name: Checkout rgbds
+      uses: actions/checkout@v3
+      with:
+        repository: gbdev/rgbds
+        path: rgbds
+        ref: 'v0.6.1'
+    - name: Install rgbds
+      run: |
+        cd rgbds
+        make Q=
+        sudo make install
+      working-directory: ~
+    - name: Checkout prism
+      uses: actions/checkout@v3
+      with:
+        path: prism
+        submodules: recursive
+    - name: Build prism
+      run: |
+        cd prism
+        make -j4
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-artifacts
+        path: |
+          prism/pokeprism.gbc
+          prism/pokeprism.map
+          prism/pokeprism.sym
+          prism/contents/bank_ends.txt

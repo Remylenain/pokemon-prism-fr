@@ -1,0 +1,37 @@
+JoeGroup:
+	; 1
+	db "Joe@"
+
+	db TRAINERTYPE_MOVES
+
+	db 69, FURRET
+		db DOUBLE_EDGE
+		db DIG
+		db ROLLOUT
+		db SWAGGER
+
+	db 71, KANGASKHAN
+		db EARTHQUAKE
+		db DIZZY_PUNCH
+		db RETURN
+		db ATTRACT
+
+	db 73, URSARING
+		db CRUNCH
+		db SWORDS_DANCE
+		db SEISMIC_TOSS
+		db SLASH
+
+	db 74, PIDGEOT
+		db RETURN
+		db BRAVE_BIRD
+		db WHIRLWIND
+		db QUICK_ATTACK
+
+	db 76, SNORLAX
+		db EARTHQUAKE
+		db ICE_PUNCH
+		db REST
+		db SLEEP_TALK
+
+	db -1

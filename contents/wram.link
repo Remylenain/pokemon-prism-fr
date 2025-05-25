@@ -1,0 +1,57 @@
+WRAM0
+	"Version check"
+	"Stack"
+	align 8
+	"Audio WRAM"
+	"WRAM 0"
+	align 8
+	"WRAM Sprite Animations"
+	align 8
+	"Sprites WRAM"
+	"Tilemap"
+	"Battle"
+	align 8
+	"Overworld Map"
+	org $cd20
+	"WRAM 0 continued"
+
+WRAMX 1
+	org $d000
+	"WRAM 1"
+
+WRAMX 2
+	align 2
+	"WRAM 2 aligned"
+	"Pic Animations WRAM"
+	"Battle Tower"
+	"WRAM 2 extra"
+	align 8
+	"Stable RNG"
+	org $dabf
+	"Sound Stack"
+
+WRAMX 3
+	"Metatiles"
+
+WRAMX 4
+	"Attributes"
+
+WRAMX 5
+	"GBC Video"
+	align 8
+	"LY Overrides"
+	"Magnet Train"
+	align 8
+	"LY Overrides Staging"
+	align 8
+	"Collisions + Spectrum + Battle Animations + Trainer Card Leader Palettes"
+	align 8
+	"Palettes 2"
+	align 8
+	"3D Prism"
+
+WRAMX 6
+	"WRAM 6"
+
+WRAMX 7
+	"WRAM 7"

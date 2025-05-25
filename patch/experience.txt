@@ -1,0 +1,179 @@
+RecalculateExperience:
+	; #1: points, #2: original curve, #3: new curve
+	push #d
+	push #c
+	push #b
+	push #a
+	push #3
+	push #2
+	set #a, #1
+	call CalculateCurrentLevel
+	pop #2
+	ifeq #result, 100, .level_100
+	push #result
+	push #2
+	set #1, #result
+	call CalculateExperienceAtLevel
+	subtract #d, #a, #result
+	set #a, #result
+	pop #2
+	stackread #1, #zero
+	increment #1
+	call CalculateExperienceAtLevel
+	subtract #b, #result, #a
+	stackread #1, #zero
+	stackread #2, 1
+	call CalculateExperienceAtLevel
+	set #a, #result
+	pop #1
+	increment #1
+	pop #2
+	call CalculateExperienceAtLevel
+	subtract #c, #result, #a
+	; the result is #a + (#d * #c) / #b
+	; note that #d * #c can become 33 bits long in a very specific case, and so this workaround is needed
+	longmul #result, #temp, #c, #d
+	jumpz #temp, .no_overflow
+	shiftright #result, 1
+	shiftright #b, 1
+	or #result, 0x80000000
+.no_overflow
+	divide #result, #b
+	add #result, #a
+	jump .done
+
+.level_100
+	pop #2
+	set #1, #result
+	call CalculateExperienceAtLevel
+.done
+	pop #a
+	pop #b
+	pop #c
+	pop #d
+	return
+
+CalculateCurrentLevel:
+	; #1: experience points, #2: curve
+	push #a
+	push #b
+	push #c
+	set #a, #1
+	set #b, #2
+	set #c, 1
+.loop
+	add #1, #c, 1
+	set #2, #b
+	call CalculateExperienceAtLevel
+	ifgt #result, #a, .done
+	increment #c
+	iflt #c, 100, .loop
+.done
+	set #result, #c
+	pop #c
+	pop #b
+	pop #a
+	return
+
+CalculateExperienceAtLevel:
+	; #1: level, #2: curve
+	jumpz #1, .invalid_level
+	ifle #1, 100, .level_OK
+.invalid_level
+	bufstring .invalid_level_string
+	bufnumber #1
+	printbuf
+	exit 1
+.invalid_level_string
+	string "Error: attempted to calculate experience points for level "
+
+.level_OK
+	ifle #2, 7, .curve_OK
+.invalid_curve
+	print .invalid_curve_string
+	exit 1
+.invalid_curve_string
+	string "Error: unknown level curve"
+
+.curve_OK
+	set #result, #zero
+	ifeq #1, 1, .return
+	jumptable #2
+	dw .medium_fast
+	dw .invalid_curve
+	dw .invalid_curve
+	dw .medium_slow
+	dw .fast
+	dw .slow
+	dw .erratic
+	dw .fluctuating
+
+.medium_fast
+	set #temp, 20
+.pure_cubic
+	multiply #result, #1, #1
+	multiply #temp, #1
+	multiply #result, #temp
+	divide #result, 20
+.return
+	return
+
+.medium_slow
+	multiply #temp, #1, #1
+	multiply #result, #temp, #1
+	multiply #result, 6
+	divide #result, 5 ;only step that can give a fraction (to throw away)
+	mulacum #result, #temp, -15
+	mulacum #result, #1, 100
+	subtract #result, 140
+	return
+
+.fast
+	set #temp, 16
+	jump .pure_cubic
+
+.slow
+	set #temp, 25
+	jump .pure_cubic
+
+.erratic
+	set #2, 100 ;most common value
+	ifle #1, 50, .erratic_low
+	ifle #1, 68, .erratic_medium
+	ifle #1, 98, .erratic_high
+	subtract #temp, 160, #1
+	jump .done_erratic_fluctuating
+.erratic_low
+	set #2, 50
+	subtract #temp, 100, #1
+	jump .done_erratic_fluctuating
+.erratic_medium
+	subtract #temp, 150, #1
+	jump .done_erratic_fluctuating
+.erratic_high
+	multiply #temp, #1, 10
+	subtract #temp, 1911, #temp
+	divide #temp, 3
+	set #2, 500
+.done_erratic_fluctuating
+	multiply #result, #1, #1
+	multiply #result, #1
+	multiply #result, #temp
+	divide #result, #2
+	return
+
+.fluctuating
+	ifle #1, 15, .fluctuating_low
+	ifle #1, 36, .fluctuating_medium
+	shiftright #temp, #1, 1
+	add #temp, 32
+	jump .done_fluctuating
+.fluctuating_low
+	add #temp, #1, 73
+	divide #temp, 3
+	jump .done_fluctuating
+.fluctuating_medium
+	add #temp, #1, 14
+.done_fluctuating
+	set #2, 50
+	jump .done_erratic_fluctuating

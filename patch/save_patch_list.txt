@@ -1,0 +1,87 @@
+SavePatches:
+	; if build < (2 byte value), apply patch indicated by 4 byte pointer; 0 ends the list
+	dh 225
+	dw ExpandItemSpace
+
+	dh 148
+	dw SaveRTCPatch
+
+	dh 150
+	dw CreateExtraDataSaveArea
+
+	dh 151
+	dw FixSavefileChecksum
+
+	dh 158
+	dw FixCaterpieQuestFlags
+
+	dh 161
+	dw FixIronHeadTMFlag
+
+	dh 164
+	dw FixSwaggerTMFlags
+
+	dh 164
+	dw CreateRandomData
+
+	dh 166
+	dw SetTimeEnabledBit
+
+	dh 170
+	dw FixAronDrifloonFeebasSwabluExp
+
+	dh 175
+	dw SetQRReaderEvent
+
+	dh 179
+	dw FixGBPrinterValue
+
+	dh 187
+	dw ClearUnusedFlagsBuild0187
+
+	dh 188
+	dw ClearOldMilosCutsceneFlags
+
+	dh 194
+	dw FixPhloxCEOFlags
+
+	dh 196
+	dw ClearUnusedFlagBuild0196
+
+	dh 196
+	dw FixBattleTowerWinStreak
+
+	dh 200
+	dw ClearDusknoirFlagsAndUnused0200Flag
+
+	dh 210
+	dw GoldTokenPatch
+
+	dh 217
+	dw FixVoidSphereGhostHammerPPs
+
+	dh 248
+	dw FixRoute82ItemFlag
+
+	dh 248
+	dw FixRoute84ItemFlag
+
+	dh 248
+	dw FixMilosCatacombsFlag
+
+	dh 248
+	dw FixSilkTunnelItemFlag
+
+	dh 248
+	dw MoveNotice
+
+	dh 251
+	dw FixRoute81ItemFlag
+
+	dh 253
+	dw ClearBadShinyTreeID
+
+	dh 253
+	dw MoveFruitTreeFlags
+
+	dh 0

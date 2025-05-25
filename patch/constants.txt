@@ -1,0 +1,203 @@
+; size constants
+	define BANK_SIZE,    0x4000
+	define BANKS,          0x80
+	define ROM_SIZE,   0x200000
+	define HASH_SIZE,        20
+	define SAVE_SIZE,    0x8000
+
+; SRAM pointers
+	define sBuildNumber,                0x4bc
+	define sStableRNGData,              0x4be
+	define sRTCStatusFlags,             0xc60
+	define sBackupValidCheck1,         0x1208
+	define sBackupGameData,            0x1209
+	define sBackupExtraData,           0x1d76
+	define sBackupExtraChecksum,       0x1f06
+	define sBackupChecksum,            0x1f0d
+	define sBackupValidCheck2,         0x1f0f
+	define sGBPrinter,                 0x2004
+	define sValidCheck1,               0x2008
+	define sGameData,                  0x2009
+	define sExtraData,                 0x2b76
+	define sExtraChecksum,             0x2d06
+	define sChecksum,                  0x2d0d
+	define sValidCheck2,               0x2d0f
+	define sBTWinStreak,               0x3ec8
+	define sBox1,                      0x4000
+	define sBox8,                      0x6000
+
+; SRAM sizes
+	define GAME_DATA_SIZE,              0xb6d
+	define EXTRA_DATA_SIZE,               400
+	define BOX_SIZE,                    0x450
+
+; game data offsets
+	define KEY_ITEMS_COUNT_OFFSET_OLD,  0x429
+	define BALLS_COUNT_OFFSET_OLD,      0x442
+	define TOWN_MAP_FLAGS_OFFSET_OLD,   0x4dc
+
+	define STATUS_FLAGS_2_OFFSET,       0x3d2
+	define TM_FLAGS_OFFSET,             0x3de
+	define ITEMS_COUNT_OFFSET,          0x3eb
+	define KEY_ITEMS_COUNT_OFFSET,      0x43d
+	define BALLS_COUNT_OFFSET,          0x465
+	define PC_ITEMS_COUNT_OFFSET,       0x4a5
+	define ITEMS_OBTAINED_OFFSET,       0x5b7
+	define EVENT_FLAGS_OFFSET,          0x5f7
+	define BINGO_DATA_OFFSET,           0x6f1
+	define FRUITTREE_FLAGS_OFFSET,      0x7ac
+	define MAP_GROUP_OFFSET,            0x83a
+	define PARTY_COUNT_OFFSET,          0x85c
+	define POKEDEX_CAUGHT_FLAGS_OFFSET, 0xa1e
+	define POKEDEX_SEEN_FLAGS_OFFSET,   0xa3e
+	define DAYCARE_MAN_OFFSET,          0xa7a
+	define DAYCARE_LADY_OFFSET,         0xab0
+
+; event flags
+	define EVENT_HAS_QR_READER,                                 51
+	define EVENT_POKEONLY_CATERPIE_IN_PARTY,                    75
+	define EVENT_POKEONLY_MOTHERBUTTERFREE_IN_PARTY,            81
+	define EVENT_POKEONLY_FINISHED_CATERPIE_QUEST,              82
+	define EVENT_MILOS_CATACOMBS_RAZOR_FANG,                   104
+	define EVENT_CAPER_MART_HIDDENITEM_GOLD_TOKEN,             160
+	define EVENT_HAPPINESS_RATER_HIDDENITEM_GOLD_TOKEN,        161
+	define EVENT_HEATH_GYM_HIDDENITEM_GOLD_TOKEN,              162
+	define EVENT_LAUREL_CITY_HIDDENITEM_GOLD_TOKEN,            163
+	define EVENT_TORENIA_MART_HIDDENITEM_GOLD_TOKEN,           164
+	define EVENT_ROUTE_68_HIDDENITEM_GOLD_TOKEN,               168
+	define EVENT_ROUTE_69_SOUTH_GATE_HIDDENITEM_GOLD_TOKEN,    169
+	define EVENT_ROUTE_70_HIDDENITEM_GOLD_TOKEN,               170
+	define EVENT_ROUTE_71_WEST_HIDDENITEM_GOLD_TOKEN,          171
+	define EVENT_ROUTE_72_HIDDENITEM_GOLD_TOKEN,               172
+	define EVENT_ROUTE_73_HIDDENITEM_GOLD_TOKEN,               173
+	define EVENT_ROUTE_74_HIDDENITEM_GOLD_TOKEN,               174
+	define EVENT_ROUTE_75_HIDDENITEM_GOLD_TOKEN,               176
+	define EVENT_ROUTE_76_HIDDENITEM_GOLD_TOKEN,               177
+	define EVENT_ROUTE_77_HIDDENITEM_GOLD_TOKEN,               178
+	define EVENT_ROUTE_79_HIDDENITEM_GOLD_TOKEN,               182
+	define EVENT_ROUTE_82_HIDDENITEM_GOLD_TOKEN,               183
+	define EVENT_ROUTE_83_HIDDENITEM_GOLD_TOKEN,               184
+	define EVENT_ROUTE_84_HIDDENITEM_GOLD_TOKEN,               185
+	define EVENT_ACQUA_TUTORIAL_HIDDENITEM_GOLD_TOKEN,         187
+	define EVENT_LAUREL_FOREST_GATES_HIDDENITEM_GOLD_TOKEN,    189
+	define EVENT_CLATHRITE_B2F_HIDDENITEM_GOLD_TOKEN,          191
+	define EVENT_SEASHORE_GYM_HIDDENITEM_GOLD_TOKEN,           194
+	define EVENT_GRAVEL_TOWN_HIDDENITEM_GOLD_TOKEN,            195
+	define EVENT_MERSON_CITY_HIDDENITEM_GOLD_TOKEN,            196
+	define EVENT_HAYWARD_CITY_HIDDENITEM_GOLD_TOKEN,           197
+	define EVENT_OWSAURI_GAME_CORNER_HIDDENITEM_GOLD_TOKEN,    201
+	define EVENT_MORAGA_TOWN_HIDDENITEM_GOLD_TOKEN,            202
+	define EVENT_JAERU_CITY_HIDDENITEM_GOLD_TOKEN,             203
+	define EVENT_BOTAN_CITY_HIDDENITEM_GOLD_TOKEN,             204
+	define EVENT_CASTRO_VALLEY_HIDDENITEM_GOLD_TOKEN,          205
+	define EVENT_CASTRO_MANSION_HIDDENITEM_GOLD_TOKEN,         206
+	define EVENT_EAGULOU_CITY_HIDDENITEM_GOLD_TOKEN,           207
+	define EVENT_RIJON_LEAGUE_OUTSIDE_HIDDENITEM_GOLD_TOKEN,   208
+	define EVENT_ROUTE_47_HIDDENITEM_GOLD_TOKEN,               209
+	define EVENT_ROUTE_48_HIDDENITEM_GOLD_TOKEN,               210
+	define EVENT_ROUTE_49_HIDDENITEM_GOLD_TOKEN,               211
+	define EVENT_ROUTE_50_HIDDENITEM_GOLD_TOKEN,               212
+	define EVENT_ROUTE_51_HIDDENITEM_GOLD_TOKEN,               213
+	define EVENT_ROUTE_52_HIDDENITEM_GOLD_TOKEN,               214
+	define EVENT_ROUTE_53_HIDDENITEM_GOLD_TOKEN,               215
+	define EVENT_ROUTE_54_HIDDENITEM_GOLD_TOKEN,               216
+	define EVENT_ROUTE_55_HIDDENITEM_GOLD_TOKEN,               217
+	define EVENT_ROUTE_56_HIDDENITEM_GOLD_TOKEN,               218
+	define EVENT_ROUTE_57_HIDDENITEM_GOLD_TOKEN,               220
+	define EVENT_ROUTE_58_HIDDENITEM_GOLD_TOKEN,               221
+	define EVENT_ROUTE_59_HIDDENITEM_GOLD_TOKEN,               222
+	define EVENT_ROUTE_60_HIDDENITEM_GOLD_TOKEN,               223
+	define EVENT_POWER_PLANT_HIDDENITEM_GOLD_TOKEN,            224
+	define EVENT_ROUTE_61_GATE_NORTH_HIDDENITEM_GOLD_TOKEN,    225
+	define EVENT_ROUTE_62_HIDDENITEM_GOLD_TOKEN,               226
+	define EVENT_ROUTE_63_HIDDENITEM_GOLD_TOKEN,               227
+	define EVENT_ROUTE_64_HIDDENITEM_GOLD_TOKEN,               228
+	define EVENT_ROUTE_65_HIDDENITEM_GOLD_TOKEN,               229
+	define EVENT_ROUTE_66_HIDDENITEM_GOLD_TOKEN,               230
+	define EVENT_ROUTE_67_HIDDENITEM_GOLD_TOKEN,               231
+	define EVENT_MERSON_CAVE_B2F_HIDDENITEM_GOLD_TOKEN,        232
+	define EVENT_MT_BOULDER_B1F_HIDDENITEM_GOLD_TOKEN,         233
+	define EVENT_SILK_TUNNEL_B5F_HIDDENITEM_GOLD_TOKEN,        235
+	define EVENT_CASTRO_FOREST_HIDDENITEM_GOLD_TOKEN,          236
+	define EVENT_ILEX_FOREST_HIDDENITEM_GOLD_TOKEN,            241
+	define EVENT_ROUTE_34_GATE_HIDDENITEM_GOLD_TOKEN,          242
+	define EVENT_GOLDENROD_CITY_HIDDENITEM_GOLD_TOKEN,         243
+	define EVENT_GOLDENROD_CAPE_HIDDENITEM_GOLD_TOKEN,         244
+	define EVENT_PROF_JEN_PROF_1,                              263
+	define EVENT_PROF_JEN_PROF_2,                              264
+	define EVENT_GOLDTOKENMAN_MILESTONE_1,                     265
+	define EVENT_GOLDTOKENMAN_MILESTONE_2,                     266
+	define EVENT_GOLDTOKENMAN_MILESTONE_3,                     267
+	define EVENT_GOLDTOKENMAN_MILESTONE_4,                     268
+	define EVENT_GOLDTOKENMAN_MILESTONE_5,                     269
+	define EVENT_GOLDTOKENMAN_MILESTONE_6,                     270
+	define EVENT_GOLDTOKENMAN_MILESTONE_7,                     271
+	define EVENT_GOLDTOKENMAN_MILESTONE_8,                     273
+	define EVENT_TUNOD_WATERWAY_HIDDENITEM_GOLD_TOKEN,         301
+	define EVENT_FIRST_BINGO_CARD_GOLD_TOKEN,                  322
+	define EVENT_SECOND_BINGO_CARD_GOLD_TOKEN,                 323
+	define EVENT_THIRD_BINGO_CARD_GOLD_TOKEN,                  324
+	define EVENT_FIRELIGHT_ITEMROOM_TM,                        777
+	define EVENT_PHLOX_LAB_CEO,                               1225
+	define EVENT_MILOS_B2F_ITEM_RAZOR_CLAW,                   1677
+	define EVENT_ROUTE_81_MEGAPHONE,                          1640
+	define EVENT_ROUTE_82_CAVE_ITEM_SCOPE_LENS,               1642
+	define EVENT_ROUTE_84_ITEM_NEVERMELTICE,                  1645
+	define EVENT_MILOS_B2F_ITEM_DUSK_STONE,                   1676
+	define EVENT_ROUTE_63_TM,                                 1717
+	define EVENT_SILK_TUNNEL_B3F_ITEM_PROTECTOR,              1773
+
+; Pokémon
+	define ARON,        43
+	define LAIRON,      44
+	define AGGRON,      45
+	define DRIFLOON,    84
+	define DRIFBLIM,    85
+	define DUSKNOIR,   173
+	define SWABLU,     202
+	define ALTARIA,    203
+	define FEEBAS,     210
+	define MILOTIC,    211
+
+; items
+	define METAL_POWDER,  35
+	define OLD_ROD,       58
+	define AMULET_COIN,   91
+	define NEVERMELTICE, 107
+	define SCOPE_LENS,   140
+	define MEGAPHONE,    141
+	define GOLD_TOKEN,   158
+	define RED_FLUTE,    181
+	define YELLOW_FLUTE, 182
+	define DUSK_STONE,   214
+	define CORONETSTONE, 220 ;retired
+	define PROTECTOR,    230
+	define QR_READER,    239
+
+; moves
+	define VOID_SPHERE,  159
+	define GHOST_HAMMER, 251
+
+; experience curves
+	define MEDIUM_FAST,  0
+	define MEDIUM_SLOW,  3
+	define FAST,         4
+	define SLOW,         5
+	define ERRATIC,      6
+	define FLUCTUATING,  7
+
+; item pockets
+	define POCKET_ITEMS,      0
+	define POCKET_BALLS,      1
+	define POCKET_KEY_ITEMS,  2
+	define NUM_POCKETS,       3 ;TMs don't count
+	define PC_ITEM_STORAGE,  -1
+
+; miscellaneous
+	define PARTYMON_STRUCT_LENGTH, 0x30
+	define BOXMON_STRUCT_LENGTH,   0x20
+	define NAME_LENGTH,              11
+	define MAX_ITEMS,                40
+	define MAX_BALLS,                25
+	define MAX_KEY_ITEMS,            50
+	define MAX_PC_ITEMS,             60

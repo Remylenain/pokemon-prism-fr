@@ -1,0 +1,37 @@
+KarpmanGroup:
+	; 1
+	db "Karpman@"
+
+	db TRAINERTYPE_MOVES
+
+	db 76, SEAKING
+		db MEGAHORN
+		db ICE_BEAM
+		db SURF
+		db HYDRO_PUMP
+
+	db 77, SLOWBRO
+		db EARTHQUAKE
+		db SURF
+		db CALM_MIND
+		db REST
+
+	db 79, LANTURN
+		db THUNDERBOLT
+		db VAPORIZE
+		db SURF
+		db THUNDER_WAVE
+
+	db 80, TENTACRUEL
+		db SURF
+		db STEEL_EATER
+		db SUBSTITUTE
+		db ICE_BEAM
+
+	db 82, VAPOREON
+		db VAPORIZE
+		db ACID_ARMOR
+		db SURF
+		db ICE_BEAM
+
+	db -1

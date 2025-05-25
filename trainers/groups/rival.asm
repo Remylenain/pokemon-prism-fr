@@ -1,0 +1,186 @@
+RivalGroup:
+	; 1
+	db "Thug@"
+
+	db TRAINERTYPE_MOVES
+
+	db 5, BAGON
+		db RAGE
+		db LEER
+		db 0
+		db 0
+
+	db -1
+
+	; 2
+	db "Thug@"
+
+	db TRAINERTYPE_MOVES
+
+	db 13, PARAS
+		db CUT
+		db POISONPOWDER
+		db STUN_SPORE
+		db FURY_CUTTER
+
+	db 12, SNEASEL
+		db CUT
+		db ICY_WIND
+		db PURSUIT
+		db MUD_SLAP
+
+	db 14, BAGON
+		db CUT
+		db LEER
+		db EMBER
+		db HEADBUTT
+
+	db -1
+
+	; 3
+	db "Thug@"
+
+	db TRAINERTYPE_MOVES
+
+	db 31, PARASECT
+		db FURY_CUTTER
+		db SLEEP_POWDER
+		db SLASH
+		db POISONPOWDER
+
+	db 28, SCYTHER
+		db SLASH
+		db AERIAL_ACE
+		db FURY_CUTTER
+		db NO_MOVE
+
+	db 31, SNEASEL
+		db METAL_CLAW
+		db SLASH
+		db SCREECH
+		db NO_MOVE
+
+	db 32, SHELGON
+		db THUNDER_FANG
+		db PROTECT
+		db EMBER
+		db DRAGONBREATH
+
+	db -1
+
+	; 4
+	db "Thug@"
+
+	db TRAINERTYPE_MOVES
+
+	db 41, PARASECT
+		db SLEEP_POWDER
+		db SLASH
+		db SPRING_BUDS
+		db FURY_CUTTER
+
+	db 42, URSARING
+		db SLASH
+		db REST
+		db BULK_UP
+		db NO_MOVE
+
+	db 42, SCIZOR
+		db SLASH
+		db METAL_CLAW
+		db FURY_CUTTER
+		db METALLURGY
+
+	db 43, WEAVILE
+		db SLASH
+		db METAL_CLAW
+		db AGILITY
+		db SWORDS_DANCE
+
+	db 44, SHELGON
+		db DRAGON_CLAW
+		db DRAGONBREATH
+		db CRUNCH
+		db SCARY_FACE
+
+	db -1
+
+	; 5
+	db "Thug@"
+
+	db TRAINERTYPE_MOVES
+
+	db 53, PARASECT
+		db SLEEP_POWDER
+		db SLASH
+		db SPRING_BUDS
+		db X_SCISSOR
+
+	db 54, URSARING
+		db SLASH
+		db REST
+		db BULK_UP
+		db HYPER_BEAM
+
+	db 54, SCIZOR
+		db SLASH
+		db METAL_CLAW
+		db X_SCISSOR
+		db METALLURGY
+
+	db 55, WEAVILE
+		db NIGHT_SLASH
+		db ICE_PUNCH
+		db AGILITY
+		db SWORDS_DANCE
+
+	db 56, SALAMENCE
+		db DRAGON_CLAW
+		db FLY
+		db CRUNCH
+		db SCARY_FACE
+
+	db -1
+
+	; 6
+	db "Thug@"
+
+	db TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+
+	db 80, AGGRON, MOON_RING ; Sturdy
+		db EARTHQUAKE
+		db IRON_HEAD
+		db OUTRAGE
+		db METALLURGY
+
+	db 81, PARASECT, LEFTOVERS ; Dry Skin
+		db SLEEP_POWDER
+		db SLASH
+		db SPRING_BUDS
+		db X_SCISSOR
+
+	db 82, URSARING, RAZOR_CLAW ; Guts
+		db SLASH
+		db REST
+		db BULK_UP
+		db SLEEP_TALK
+
+	db 82, SCIZOR, SCOPE_LENS ; Technician
+		db METALLURGY
+		db FOCUS_ENERGY
+		db METAL_CLAW
+		db X_SCISSOR
+
+	db 83, WEAVILE, RAZOR_CLAW
+		db NIGHT_SLASH
+		db ICE_PUNCH
+		db AGILITY
+		db SWORDS_DANCE
+
+	db 84, SALAMENCE, SCOPE_LENS
+		db DRAGON_CLAW
+		db FLY
+		db CRUNCH
+		db FOCUS_ENERGY
+
+	db -1

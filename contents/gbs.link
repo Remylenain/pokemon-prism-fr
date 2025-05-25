@@ -1,0 +1,44 @@
+INCLUDE "contents/wram.link"
+
+; sections not in numerical order, because we want them to fit better
+
+ROMX 1
+	"Audio"
+	"Songs 5"
+	"Songs small 4"
+	"Songs small 6"
+
+ROMX 2
+	"Songs 2"
+	"Songs 3"
+	"Songs small 3"
+	"Songs small 9"
+	"Songs small 11"
+	"Songs small 12"
+
+ROMX 3
+	"Songs 10"
+
+ROMX 4
+	"Songs 1"
+	"Songs 4"
+	"Songs small 10"
+	"Songs small 14"
+
+ROMX 5
+	"Songs 6"
+	"Songs small 8"
+
+ROMX 6
+	"Songs 8"
+	"Songs small 7"
+
+ROMX 7
+	"Songs 9"
+	"Songs small 2"
+	"Songs small 5"
+	"Songs small 13"
+
+ROMX 8
+	"Songs 7"
+	"Songs small 1"

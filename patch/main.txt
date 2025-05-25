@@ -1,0 +1,84 @@
+Main:
+	call PrintInitialMessage
+	length #temp
+	iflt #temp, 7, LOLEasterEgg
+	subtract #temp, SAVE_SIZE
+	iflt #temp, 0x40, .savefile_patch
+	call DetectBase
+	call SelectTarget
+	ifgt #source, 1, PatchPrismToPrism
+	callnz #source, ConvertCrystalVersion
+	call ApplyPrismPatch
+	callnz #target, ConvertPrismVersion
+	jump ValidatePatchResults
+
+.savefile_patch
+	print .savefile_string
+	menu #result, YesNoMenu
+	jumpz #result, PatchSavefile
+	exit 1
+
+.savefile_string
+	string "The input file seems to be a savefile. Do you want to patch a savefile to the latest version?"
+
+ValidatePatchResults:
+	ifeq #target, 2, .skip_length_check
+	length #length
+	ifne #length, ROM_SIZE, PatchingError
+.skip_length_check
+	multiply #temp, #target, HASH_SIZE
+	add #temp, PrismHashes
+	checksha1 #result, #temp
+	jumpnz #result, PatchingError
+	print PatchingCompletedMessage
+	ifeq #target, 2, .gbs
+	ifge #source, 2, .skip_reminder
+	print .patch_savefile_reminder
+.skip_reminder
+	exit #zero
+
+.gbs
+	print .gbs_reminder
+	exit #zero
+
+.patch_savefile_reminder
+	string "Remember that, if you want to keep your old savefile, you will have to patch it as well. You can use this patch for that purpose too."
+.gbs_reminder
+	string "Remember to rename the output file to pokeprism.gbs. You will need a GBS music player to listen to it."
+
+PatchingError:
+	print .message
+	exit 1
+
+.message
+	string "An error occurred while applying the patch. Please ensure that the base ROM and the patch are correct and try again."
+
+PatchingCompletedMessage:
+	string "Patching completed!"
+
+PrintInitialMessage:
+	bufstring .pokemon_prism_string
+	add #address, VersionInfo, 2
+	getbyteinc #temp, #address
+	bufnumber #temp
+	bufchar 0x2e ;0x2e is ASCII for '.'
+	getbytedec #temp, #address
+	bufnumber #temp
+	decrement #address
+	bufstring .comma_build_string
+	; build number is big endian
+	getbytedec #1, #address
+	getbyte #temp, #address
+	mulacum #1, #temp, 0x100
+	set #2, 4
+	call PrintWithLeadingZeros
+	bufstring .parenthesis_asterisks_string
+	printbuf
+	return
+
+.pokemon_prism_string
+	string "*** Pokémon Prism patch (version "
+.comma_build_string
+	string ", build "
+.parenthesis_asterisks_string
+	string ") ***"

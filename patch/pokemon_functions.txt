@@ -1,0 +1,101 @@
+FixExperienceCurves:
+	; #1: list of curves (mon, old curve, new curve; 0 ends)
+	push #address
+	set #address, #1
+	set #1, .callback
+	call ApplyPartyPatches
+	pop #address
+	return
+
+.callback
+	seek #1
+	readbyte #temp
+	push #address
+.loop
+	getbyteinc #2, #address
+	jumpz #2, .done
+	ifeq #2, #temp, .patch
+	increment #address
+	increment #address
+	jump .loop
+.patch
+	seekfwd 7
+	getbyteinc #2, #address
+	getbyte #3, #address
+	readbyte #1
+	shiftleft #1, 8
+	readbyte #temp
+	or #1, #temp
+	shiftleft #1, 8
+	readbyte #temp
+	or #1, #temp
+	call RecalculateExperience
+	set #temp, 0xff
+	and #3, #result, #temp
+	shiftright #result, 8
+	and #2, #result, #temp
+	shiftright #1, #result, 8
+	seekback 3
+	writebyte #1
+	writebyte #2
+	writebyte #3
+.done
+	pop #address
+	return
+
+UpdatePPCounts:
+	; in: table with move, old PP, new PP; end with -1
+	push #r0
+	set #r0, #1
+	set #1, .callback
+	call ApplyPartyPatches
+	pop #r0
+	return
+
+.callback
+	add #1, 2
+	seek #1
+	set #1, #zero
+.move_loop
+	readbyte #temp
+	retz #temp
+	ifeq #temp, 0xff, .skip_move
+	set #2, #r0
+.table_loop
+	getbyteinc #3, #2
+	ifeq #3, 0xff, .skip_move
+	getbyteinc #4, #2
+	getbyteinc #5, #2
+	ifne #3, #temp, .table_loop
+	ifeq #4, #5, .skip_move
+	pushpos
+	seekfwd 20
+	getfilebyte #temp
+	shiftright #2, #temp, 6
+	and #temp, 0x3f
+	add #3, #2, 5
+	multiply #4, #3
+	divide #4, 5
+	multiply #5, #3
+	divide #5, 5
+	ifle #4, 63, .old_OK
+	set #4, 63
+.old_OK
+	ifle #5, 63, .new_OK
+	set #5, 63
+.new_OK
+	iflt #5, #4, .decrease_PP
+	subtract #3, #5, #4
+	add #temp, #3
+.decrease_PP
+	ifle #temp, #5, .PP_OK
+	set #temp, #5
+.PP_OK
+	shiftleft #2, 6
+	or #temp, #2
+	writebyte #temp
+	poppos
+.skip_move
+	increment #1
+	iflt #1, 4, .move_loop
+	return

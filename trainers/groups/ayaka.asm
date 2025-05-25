@@ -1,0 +1,31 @@
+AyakaGroup:
+	; 1
+	db "Ayaka@"
+
+	db TRAINERTYPE_MOVES
+
+	db 36, HAUNTER
+		db PSYCHIC
+		db HYPNOSIS
+		db BURNING_MIST
+		db POISON_GAS
+
+	db 37, TORKOAL
+		db BURNING_MIST
+		db FLAMETHROWER
+		db SMOKESCREEN
+		db BODY_SLAM
+
+	db 39, WEEZING
+		db BURNING_MIST
+		db POISON_GAS
+		db SLUDGE_BOMB
+		db EXPLOSION
+
+	db 41, DRAPION
+		db NIGHT_SLASH
+		db EARTHQUAKE
+		db SLUDGE_BOMB
+		db BURNING_MIST
+
+	db -1

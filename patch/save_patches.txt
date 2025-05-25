@@ -1,0 +1,390 @@
+SaveRTCPatch:
+	seek sRTCStatusFlags
+	lockpos
+	readbyte #temp
+	or #temp, 0x80
+	writebyte #temp
+	unlockpos
+	return
+
+CreateExtraDataSaveArea:
+	seek sExtraData
+	fillbyte EXTRA_DATA_SIZE, #zero
+	seek sBackupExtraData
+	fillbyte EXTRA_DATA_SIZE, #zero
+	return
+
+FixCaterpieQuestFlags:
+	set #1, EVENT_FLAGS_OFFSET
+	call GetGameDataPointer
+	seek #result
+	set #1, EVENT_POKEONLY_FINISHED_CATERPIE_QUEST
+	set #2, #result ;minor optimization, since we know #result > 2
+	call FlagAction
+	retz #result
+	set #1, .flags
+	set #2, #zero
+	call EventFlagCheck
+	retz #result
+	print .caterpie_error_text
+	menu #result, YesNoMenu
+	retnz #result
+	set #1, .flags
+	set #2, #zero
+	call EventFlagPatch
+	jump FixSavefileChecksum
+
+.caterpie_error_text
+	string "It seems like the Caterpie quest in Laurel Forest is done, but the event flags are incorrectly set. Do you want to fix those flags?"
+.flags
+	dh EVENT_POKEONLY_CATERPIE_IN_PARTY, EVENT_POKEONLY_MOTHERBUTTERFREE_IN_PARTY, -1
+
+FixIronHeadTMFlag:
+	set #1, TM_FLAGS_OFFSET
+	call GetGameDataPointer
+	seek #result
+	set #1, 57 ;TM58 - 1
+	set #2, #result
+	call FlagAction
+	retnz #result
+	set #1, EVENT_FLAGS_OFFSET
+	call GetGameDataPointer
+	seek #result
+	set #1, EVENT_ROUTE_63_TM
+	set #2, #result
+	push #1
+	call FlagAction
+	pop #1
+	retz #result
+	print .restored_item_text
+	set #2, #zero
+	call FlagAction
+	jump FixSavefileChecksum
+
+.restored_item_text
+	string "You seemed to have already picked up the item ball on Route 63, but the item was changed, so the ball was restored for you."
+
+FixSwaggerTMFlags:
+	set #1, EVENT_FLAGS_OFFSET
+	call GetGameDataPointer
+	seek #result
+	set #1, EVENT_FIRELIGHT_ITEMROOM_TM
+	set #2, #result
+	push #1
+	call FlagAction
+	pop #1
+	retz #result
+	set #2, #zero
+	call FlagAction
+	print .restored_item_text
+	jump FixSavefileChecksum
+
+.restored_item_text
+	string "You seemed to have already picked up the TM in a room in Firelight Caverns, but the TM was changed, so the item ball was restored for you."
+
+CreateRandomData:
+	seek sStableRNGData
+	writehalfword #zero
+	set #temp, 8
+.loop
+	call Random
+	writebyte #result
+	decrement #temp
+	jumpnz #temp, .loop
+	return
+
+SetTimeEnabledBit:
+	set #1, STATUS_FLAGS_2_OFFSET
+	call GetGameDataPointer
+	seek #result
+	getfilebyte #temp
+	or #temp, 8 ;set bit 3
+	writebyte #temp
+	jump FixSavefileChecksum
+
+FixAronDrifloonFeebasSwabluExp:
+	set #1, .curves
+	call FixExperienceCurves
+	jump FixSavefileChecksum
+
+.curves
+	db ARON, FAST, SLOW
+	db LAIRON, FAST, SLOW
+	db AGGRON, FAST, SLOW
+	db DRIFLOON, MEDIUM_SLOW, FLUCTUATING
+	db DRIFBLIM, MEDIUM_SLOW, FLUCTUATING
+	db FEEBAS, MEDIUM_FAST, ERRATIC
+	db MILOTIC, MEDIUM_FAST, ERRATIC
+	db SWABLU, MEDIUM_FAST, ERRATIC
+	db ALTARIA, MEDIUM_FAST, ERRATIC
+	db 0
+
+SetQRReaderEvent:
+	push 1
+	set #1, KEY_ITEMS_COUNT_OFFSET
+	call GetGameDataPointer
+	seek #result
+	readbyte #temp
+	jump .handle_key_item_loop
+.key_item_loop
+	readbyte #result
+	ifeq #result, QR_READER, .done
+	decrement #temp
+.handle_key_item_loop
+	jumpnz #temp, .key_item_loop
+	set #1, PC_ITEMS_COUNT_OFFSET
+	call GetGameDataPointer
+	seek #result
+	readbyte #temp
+	jump .handle_pc_item_loop
+.pc_item_loop
+	readbyte #result
+	ifeq #result, QR_READER, .done
+	readbyte #result ;skip a byte
+	decrement #temp
+.handle_pc_item_loop
+	jumpnz #temp, .pc_item_loop
+	;not found
+	stackwrite #zero, #zero
+.done
+	set #1, EVENT_FLAGS_OFFSET
+	call GetGameDataPointer
+	seek #result
+	set #1, EVENT_HAS_QR_READER
+	pop #2
+	call FlagAction
+	jump FixSavefileChecksum
+
+FixGBPrinterValue:
+	seek sGBPrinter
+	getfilebyte #temp
+	ifeq #temp, 0x7f, .old_value
+	and #result, #temp, 7
+	ifge #temp, 0x68, .new_value
+	jumpz #result, .old_value
+.new_value
+	writebyte #result
+	return
+.old_value
+	increment #temp
+	shiftright #temp, 5
+	writebyte #temp
+	return
+
+ClearUnusedFlagsBuild0187:
+	set #1, .flags
+	set #2, #zero
+	call EventFlagPatch
+	jump FixSavefileChecksum
+
+.flags
+	dh 0x5f, 0x12d, 0x33b, -1
+
+ClearOldMilosCutsceneFlags:
+	set #1, .flags
+	set #2, #zero
+	call EventFlagPatch
+	jump FixSavefileChecksum
+
+.flags
+	dh 0x2f7, 0x2f8, 0x2f9, 0x2fa, 0x2fb, -1
+
+FixPhloxCEOFlags:
+	set #1, EVENT_FLAGS_OFFSET
+	call GetGameDataPointer
+	seek #result
+	set #1, 149
+	push #1
+	set #2, #1 ; >2
+	call FlagAction
+	pop #1
+	retz #result
+	set #2, #zero
+	call FlagAction
+	set #1, EVENT_PHLOX_LAB_CEO
+	set #2, 1
+	call FlagAction
+	jump FixSavefileChecksum
+
+ClearUnusedFlagBuild0196:
+	set #1, 1735
+	jump ClearSingleEventFlag
+
+FixBattleTowerWinStreak:
+	seek sBTWinStreak
+	getfilebyte #temp
+	remainder #result, #temp, 7
+	subtract #temp, #result
+	writebyte #temp
+	return
+
+ClearDusknoirFlagsAndUnused0200Flag:
+	set #1, POKEDEX_CAUGHT_FLAGS_OFFSET
+	call GetGameDataPointer
+	seek #result
+	subtract #1, DUSKNOIR, 1
+	push #1
+	set #2, #zero
+	call FlagAction
+	subtract #temp, POKEDEX_SEEN_FLAGS_OFFSET, POKEDEX_CAUGHT_FLAGS_OFFSET
+	seekfwd #temp
+	pop #1
+	set #2, #zero
+	call FlagAction
+	set #1, 676
+	jump ClearSingleEventFlag
+
+FixVoidSphereGhostHammerPPs:
+	set #1, .move_list
+	call UpdatePPCounts
+	jump FixSavefileChecksum
+
+.move_list
+	db VOID_SPHERE,  20, 15
+	db GHOST_HAMMER, 10, 15
+	db -1
+
+ExpandItemSpace:
+	; expand pc items
+	set #1, TOWN_MAP_FLAGS_OFFSET_OLD
+	call GetGameDataPointer
+	set #3, #result
+	set #2, 20
+	set #1, 70
+	call ShiftSaveDataForward
+
+	; expand key items
+	set #1, BALLS_COUNT_OFFSET_OLD
+	call GetGameDataPointer
+	set #3, #result
+	set #2, 27
+	set #1, 244
+	call ShiftSaveDataForward
+
+	; expand bag items
+	set #1, KEY_ITEMS_COUNT_OFFSET_OLD
+	call GetGameDataPointer
+	set #3, #result
+	set #2, 20
+	set #1, 296
+	call ShiftSaveDataForward
+	jump FixSavefileChecksum
+
+FixRoute81ItemFlag:
+	set #1, EVENT_FLAGS_OFFSET
+	call GetGameDataPointer
+	seek #result
+	set #1, EVENT_ROUTE_81_MEGAPHONE
+	set #2, #result
+	push #1
+	call FlagAction
+	pop #1
+	retz #result
+	set #2, #zero
+	call FlagAction
+	print .restored_item_text
+	jump FixSavefileChecksum
+
+.restored_item_text
+	string "You seemed to have already picked an item on Route 81, but the item was changed, so the item ball was restored for you."
+
+FixRoute82ItemFlag:
+	set #1, EVENT_FLAGS_OFFSET
+	call GetGameDataPointer
+	seek #result
+	set #1, EVENT_ROUTE_82_CAVE_ITEM_SCOPE_LENS
+	set #2, #result
+	push #1
+	call FlagAction
+	pop #1
+	retz #result
+	set #2, #zero
+	call FlagAction
+	print .restored_item_text
+	jump FixSavefileChecksum
+
+.restored_item_text
+	string "You seemed to have already picked an item on Route 82, but the item was changed, so the item ball was restored for you."
+
+FixRoute84ItemFlag:
+	set #1, EVENT_FLAGS_OFFSET
+	call GetGameDataPointer
+	seek #result
+	set #1, EVENT_ROUTE_84_ITEM_NEVERMELTICE
+	set #2, #result
+	push #1
+	call FlagAction
+	pop #1
+	retz #result
+	set #2, #zero
+	call FlagAction
+	print .restored_item_text
+	jump FixSavefileChecksum
+
+.restored_item_text
+	string "You seemed to have already picked an item on Route 84, but the item was changed, so the item ball was restored for you."
+
+FixMilosCatacombsFlag:
+	set #1, EVENT_FLAGS_OFFSET
+	call GetGameDataPointer
+	seek #result
+	set #1, EVENT_MILOS_B2F_ITEM_DUSK_STONE
+	set #2, #result
+	push #1
+	call FlagAction
+	pop #1
+	retz #result
+	set #2, #zero
+	call FlagAction
+	print .restored_item_text
+	jump FixSavefileChecksum
+
+.restored_item_text
+	string "You seemed to have already picked an item in Milos Catacombs, but the item was changed, so the item ball was restored for you."
+
+FixSilkTunnelItemFlag:
+	set #1, EVENT_FLAGS_OFFSET
+	call GetGameDataPointer
+	seek #result
+	set #1, EVENT_SILK_TUNNEL_B3F_ITEM_PROTECTOR
+	set #2, #result
+	push #1
+	call FlagAction
+	pop #1
+	retz #result
+	set #2, #zero
+	call FlagAction
+	print .restored_item_text
+	jump FixSavefileChecksum
+
+.restored_item_text
+	string "You seemed to have already picked an item in Silk Tunnel, but the item was changed, so the item ball was restored for you."
+
+MoveNotice:
+	print .move_notice_text
+	return
+
+.move_notice_text
+	string "INFO: The Pokémon moveset pool has changed in this update and your Pokémon's moves may not match up. Your movesets have not been changed and this is unlikely to affect your gameplay. However, should you wish to experience the game as intended, you may start a New Game."
+
+ClearBadShinyTreeID:
+	; clear the shiny tree ID that was being incorrectly set, so the area remains zeroed as expected
+	; no constant because it's a random unused byte
+	set #1, 0xc81
+	call GetGameDataPointer
+	seek #result
+	writebyte #zero
+	jump FixSavefileChecksum
+
+MoveFruitTreeFlags:
+	; shift left the flags for the non-apricorn trees
+	set #1, FRUITTREE_FLAGS_OFFSET
+	call GetGameDataPointer
+	seek #result
+	getfileword #1
+	shiftleft #2, #1, 7
+	and #1, 0x7ff
+	and #2, 0xfffc0000
+	or #1, #2
+	writeword #1
+	jump FixSavefileChecksum

@@ -1,0 +1,31 @@
+AndreGroup:
+	; 1
+	db "Andre@"
+
+	db TRAINERTYPE_MOVES
+
+	db 31, MACHOKE
+		db MACH_PUNCH
+		db BULK_UP
+		db SEISMIC_TOSS
+		db FOCUS_ENERGY
+
+	db 32, GALLADE
+		db FUTURE_SIGHT
+		db X_SCISSOR
+		db SIGNAL_BEAM
+		db DRAININGKISS
+
+	db 34, LUCARIO
+		db BULLET_PUNCH
+		db IRON_DEFENSE
+		db METAL_CLAW
+		db QUICK_ATTACK
+
+	db 36, MACHAMP
+		db MACH_PUNCH
+		db BULK_UP
+		db CROSS_CHOP
+		db SCARY_FACE
+
+	db -1

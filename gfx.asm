@@ -1,0 +1,11 @@
+INCLUDE "includes.asm"
+
+INCLUDE "gfx/pics.asm"
+INCLUDE "gfx/ow_sprites.asm"
+INCLUDE "gfx/minipics.asm"
+INCLUDE "tilesets/tilesets.asm"
+INCLUDE "gfx/pic_anims.asm"
+INCLUDE "gfx/emote_bubbles.asm"
+INCLUDE "gfx/font.asm"
+INCLUDE "gfx/misc.asm"
+INCLUDE "gfx/signpost.asm"

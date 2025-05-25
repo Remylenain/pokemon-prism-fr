@@ -1,0 +1,36 @@
+LOLEasterEgg:
+	length #length
+	iflt #length, 3, .not_LOL
+	seek #zero
+	readhalfword #result
+	readbyte #temp
+	mulacum #result, #temp, 0x10000
+	ifne #result, 0x4c4f4c, .not_LOL ; 0x4c4f4c = "LOL"
+	jump .handle_loop
+.loop
+	readbyte #2
+	set #1, .whitespace
+	call IsInArray
+	jumpz #result, .not_LOL
+.handle_loop
+	pos #temp
+	iflt #temp, #length, .loop
+	set #temp, 20
+.print_loop
+	print .LOL_string
+	decrement #temp
+	jumpnz #temp, .print_loop
+	setstacksize #zero ; to ensure that ApplyIPSPatch simply exits
+	truncate #zero ; just in case
+	set #address, LOLPatch
+	jump ApplyIPSPatch
+
+.not_LOL
+	print InvalidROMMessage
+	exit 1
+
+.LOL_string
+	string "LOL"
+
+.whitespace
+	db 0x0a, 0x0d, 0x20, 0xff

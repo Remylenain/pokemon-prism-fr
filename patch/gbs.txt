@@ -1,0 +1,95 @@
+ApplyGBSPatch:
+	set #address, GBSPatch
+	seek #zero
+	gethalfwordinc #length, #address
+	xordata #address, #length
+	add #address, #length
+	seek ROM_SIZE
+	jump .handle_loop
+.loop
+	gethalfwordinc #1, #address
+	getbyteinc #temp, #address
+	shiftleft #temp, 16
+	add #1, #temp
+	call ApplyGBSPatchBlock
+.handle_loop
+	gethalfwordinc #2, #address
+	jumpnz #2, .loop
+	seek #length
+	subtract #1, ROM_SIZE, #length
+	length #2
+	subtract #2, ROM_SIZE
+	call MoveGBSDataBackwards
+	truncatepos
+	seek #zero
+	ipspatch #address, #address
+	return
+
+ApplyGBSPatchBlock:
+	iflt #1, 0x100, .fill
+	pos #3
+	subtract #1, #3, #1
+	iflt #2, 32, .skip
+.loop
+	pushpos
+	seekback #1
+	call Read32Bytes
+	poppos
+	call Write32Bytes
+	set #temp, 32
+	subtract #2, #temp
+	ifge #2, #temp, .loop
+.skip
+	retz #2
+	seekback #1
+	getfilebyte #temp
+	seekfwd #1
+	writebyte #temp
+	decrement #2
+	jump .skip
+
+.fill
+	fillbyte #2, #1
+	return
+
+MoveGBSDataBackwards:
+	iflt #2, 32, .skip
+.loop
+	pushpos
+	seekfwd #1
+	call Read32Bytes
+	poppos
+	call Write32Bytes
+	set #temp, 32
+	subtract #2, #temp
+	ifge #2, #temp, .loop
+.skip
+	retz #2
+	seekfwd #1
+	getfilebyte #temp
+	seekback #1
+	writebyte #temp
+	decrement #2
+	jump .skip
+
+Read32Bytes:
+	readword #3
+	readword #4
+	readword #5
+	readword #6
+	readword #7
+	readword #8
+	readword #9
+	readword #temp
+	return
+
+Write32Bytes:
+	writeword #3
+	writeword #4
+	writeword #5
+	writeword #6
+	writeword #7
+	writeword #8
+	writeword #9
+	writeword #temp
+	return

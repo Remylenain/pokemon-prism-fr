@@ -1,0 +1,50 @@
+EdisonGroup:
+	; 1
+	db "Edison@"
+
+	db TRAINERTYPE_MOVES
+
+	db 26, HOUNDOUR
+		db FEINT_ATTACK
+		db EMBER
+		db ROAR
+		db SMOG
+
+	db 28, SNEASEL
+		db FEINT_ATTACK
+		db METAL_CLAW
+		db AGILITY
+		db QUICK_ATTACK
+
+	db 30, UMBREON
+		db FEINT_ATTACK
+		db GROWTH
+		db TAIL_WHIP
+		db SUBSTITUTE
+
+	db -1
+
+	; 2
+	db "Edison@"
+
+	db TRAINERTYPE_MOVES
+
+	db 51, HOUNDOOM
+		db DARK_PULSE
+		db FLAMETHROWER
+		db ROAR
+		db SMOG
+
+	db 52, WEAVILE
+		db FEINT_ATTACK
+		db METAL_CLAW
+		db AGILITY
+		db ICE_PUNCH
+
+	db 54, UMBREON
+		db FEINT_ATTACK
+		db CONFUSE_RAY
+		db SCREECH
+		db SUBSTITUTE
+
+	db -1

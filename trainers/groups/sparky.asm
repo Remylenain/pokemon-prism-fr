@@ -1,0 +1,37 @@
+SparkyGroup:
+	; 1
+	db "Sparky@"
+
+	db TRAINERTYPE_MOVES
+
+	db 62, MANECTRIC
+		db THUNDERBOLT
+		db FLAMETHROWER
+		db LIGHT_SCREEN
+		db SUBSTITUTE
+
+	db 63, LUXRAY
+		db WILD_CHARGE
+		db CRUNCH
+		db REST
+		db SIGNAL_BEAM
+
+	db 65, RAICHU
+		db THUNDER_WAVE
+		db AGILITY
+		db SIGNAL_BEAM
+		db CRYSTAL_BOLT
+
+	db 66, ELECTIVIRE
+		db THUNDERPUNCH
+		db ICE_PUNCH
+		db EARTHQUAKE
+		db 0
+
+	db 68, JOLTEON
+		db IRON_TAIL
+		db SHADOW_BALL
+		db SIGNAL_BEAM
+		db CRYSTAL_BOLT
+
+	db -1

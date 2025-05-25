@@ -1,0 +1,55 @@
+CalculateSHA1:
+	; this function uses checksha1 in a rather clever way along with some intentionally crafted sha1 hashes in order to calculate the sha1 of the filebuffer
+	; since there's no suitable place to return a 20-byte result, we return the value in #1 through #5
+	stackshift 25
+	set #1, #zero
+	set #2, .hash_data
+.outer_loop
+	checksha1 #3, #2
+	set #4, #zero
+.inner_loop
+	and #5, #3, 1
+	jumpnz #5, .no_match
+	add #5, #1, #4
+	and #5, 0xff
+	stackwrite #4, #5
+.no_match
+	shiftright #3, 1
+	increment #4
+	iflt #4, 20, .inner_loop
+	increment #1
+	increment #2
+	iflt #1, 0x100, .outer_loop
+	set #1, #zero
+	set #2, 20
+.combine_loop
+	set #3, #zero
+	set #4, #zero
+.read_loop
+	stackread #5, #1
+	increment #1
+	shiftleft #3, 8
+	or #3, #5
+	increment #4
+	iflt #4, 4, .read_loop
+	stackwrite #2, #3
+	increment #2
+	iflt #2, 25, .combine_loop
+	stackshift -20
+	pop #1
+	pop #2
+	pop #3
+	pop #4
+	pop #5
+	return
+
+.hash_data
+	hexdata 000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f
+	hexdata 202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f
+	hexdata 404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f
+	hexdata 606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f
+	hexdata 808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9f
+	hexdata a0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebf
+	hexdata c0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedf
+	hexdata e0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff
+	hexdata 000102030405060708090a0b0c0d0e0f101112 ;no need to complete this one, only 19 bytes are needed

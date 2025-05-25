@@ -1,0 +1,17 @@
+SRAM 0
+	"SRAM Bank 0"
+	org $a4be
+	"Saved Stable RNG"
+	org $ac60
+	"RTC"
+	org $b200
+	"Backup Save"
+
+SRAM 1
+	"SRAM Bank 1"
+
+SRAM 2
+	"Boxes 1-7"
+
+SRAM 3
+	"Boxes 8-14"

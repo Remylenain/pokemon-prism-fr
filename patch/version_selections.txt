@@ -1,0 +1,60 @@
+SelectTarget:
+	print .select_target
+	menu #target, .target_menu
+	add #temp, #target, 2
+	ifeq #temp, #source, .same_file
+	call .confirm_messages
+	retz #result
+	jump SelectTarget
+
+.same_file
+	print .same_file_message
+	menu #result, YesNoMenu
+	jumpz #result, SelectTarget
+	exit #result
+
+.same_file_message
+	string "You selected the file you already have. Would you like to build a different file?"
+
+.select_target
+	string "Select the file you want to build:"
+
+.target_menu
+	dw .release_target
+	dw .debug_target
+	dw .gbs_file
+	dw -1
+.release_target
+	string "Release ROM"
+.debug_target
+	string "Debug ROM"
+.gbs_file
+	string "GBS file"
+
+.confirm_messages
+	jumptable #target
+	dw .no_messages
+	dw .print_confirm_debug
+	dw .print_confirm_gbs
+
+.no_messages
+	set #result, #zero
+	return
+
+.print_confirm_debug
+	print .confirm_debug_1
+	print .confirm_debug_2
+.show_menu
+	menu #result, YesNoMenu
+	return
+
+.print_confirm_gbs
+	print .confirm_gbs
+	jump .show_menu
+
+.confirm_debug_1
+	string "The debug version contains no additional game features, other than debug options intended to aid the development of the game."
+.confirm_debug_2
+	string "Are you sure you want to build the debug version?"
+.confirm_gbs
+	string "The GBS file is a music file, not a complete game. Are you sure you want to build the GBS file?"

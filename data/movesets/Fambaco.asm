@@ -1,0 +1,21 @@
+FambacoEvosAttacks:
+	db 0 ; no more evolutions
+	db 1,SCRATCH
+	db 1,FOCUS_ENERGY
+	db 4,DOUBLESLAP
+	db 7,ASTONISH
+	db 10,MACH_PUNCH
+	db 15,FUTURE_SIGHT
+	db 20,LAUGHING_GAS
+	db 25,SHADOW_CLAW
+	db 30,DYNAMICPUNCH
+	db 35,BULK_UP
+	db 40,SHADOW_BALL
+	db 50,MIND_READER
+	db 60,AURA_SPHERE
+	db 70,AGILITY
+	db 80,ZEN_HEADBUTT
+	db 90,FINAL_CHANCE
+	db 95,GHOST_HAMMER
+	db 100,HI_JUMP_KICK
+	db 0 ; no more level-up moves

@@ -1,0 +1,43 @@
+SilverGroup:
+	; 1
+	db "Silver@"
+
+	db TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+
+	db 84, WEAVILE, EXPERT_BELT
+		db FURY_CUTTER
+		db ICE_PUNCH
+		db SWORDS_DANCE
+		db NIGHT_SLASH
+
+	db 84, MAGNEZONE, MEGAPHONE ; Magnet Pull
+		db METALLURGY
+		db THUNDERBOLT
+		db FLASH_CANNON
+		db NOISE_PULSE
+
+	db 85, GENGAR, CIGARETTE
+		db WILL_O_WISP
+		db MIASMA
+		db HYPNOSIS
+		db SHADOW_BALL
+
+	db 86, ALAKAZAM, TWISTEDSPOON ; Inner Focus, want Synchronize
+		db PSYCHIC_M
+		db RECOVER
+		db CALM_MIND
+		db SHADOW_BALL
+
+	db 87, CROBAT, SITRUS_BERRY
+		db BRAVE_BIRD
+		db STEEL_WING
+		db CRUNCH
+		db SCREECH
+
+	db 88, HITMONTOP, LEFTOVERS ; Intimidate
+		db HI_JUMP_KICK
+		db BULK_UP
+		db DOUBLE_EDGE
+		db MACH_PUNCH
+
+	db -1

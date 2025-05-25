@@ -1,0 +1,150 @@
+SuperNerdGroup:
+	; 1
+	db "Bill@"
+
+	db TRAINERTYPE_NORMAL
+
+	db 7, YANMA
+	db 8, TRAPINCH
+	db -1
+
+	; 2
+	db "Hugh@"
+
+	db TRAINERTYPE_NORMAL
+
+	db 8, KOFFING
+	db 9, SNORUNT
+	db -1
+
+	; 3
+	db "Hector@"
+
+	db TRAINERTYPE_NORMAL
+
+	db 36, KADABRA
+	db 37, KIRLIA
+	db -1
+
+	; 4
+	db "Enzo@"
+
+	db TRAINERTYPE_NORMAL
+
+	db 69, DUSCLOPS
+	db 71, ABSOL
+	db 72, ALAKAZAM
+	db -1
+
+	; 5
+	db "Bram@"
+
+	db TRAINERTYPE_NORMAL
+
+	db 74, SLOWBRO
+	db 74, GARDEVOIR
+	db -1
+
+	; 6
+	db "Teru@"
+
+	db TRAINERTYPE_NORMAL
+
+	db 81, MAGNETON
+	db 83, PORYGONZ
+	db 81, MAGNETON
+	db 82, MAGNEZONE
+	db -1
+
+	; 7
+	db "Eric@"
+
+	db TRAINERTYPE_NORMAL
+
+	db 82, WEEZING
+	db 83, DITTO
+	db -1
+
+	; 8
+	db "Hunter@"
+
+	db TRAINERTYPE_NORMAL
+
+	db 62, RAICHU
+	db 64, MAGNETON
+	db 65, MAGNEZONE
+	db -1
+
+	; 9
+	db "Dark@"
+
+	db TRAINERTYPE_MOVES
+
+	db 80, BLASTOISE
+		db SURF
+		db ICE_BEAM
+		db DYNAMICPUNCH
+		db HYDRO_PUMP
+
+	db 80, FEAROW
+		db DRILL_PECK
+		db FLY
+		db TRI_ATTACK
+		db DOUBLE_EDGE
+
+	db 80, MAGMAR
+		db FIRE_PUNCH
+		db FLAMETHROWER
+		db MIASMA
+		db CONFUSE_RAY
+
+	db 80, MEGANIUM
+		db BODY_SLAM
+		db POISONPOWDER
+		db RAZOR_LEAF
+		db SOLARBEAM
+
+	db 80, TYRANITAR
+		db NOISE_PULSE
+		db EARTHQUAKE
+		db ROCK_SLIDE
+		db CRUNCH
+
+	db -1
+
+	; 10
+	db "Zebulon@"
+
+	db TRAINERTYPE_MOVES
+
+	db 83, MISMAGIUS
+		db CONFUSE_RAY
+		db SHADOW_BALL
+		db PSYCHIC_M
+		db POWER_GEM
+
+	db 82, BANETTE
+		db THIEF
+		db SWORDS_DANCE
+		db GHOST_HAMMER
+		db CONFUSE_RAY
+
+	db 83, GENGAR
+		db SHADOW_BALL
+		db HYPNOSIS
+		db DREAM_EATER
+		db MIASMA
+
+	db 84, FROSLASS
+		db ICE_BEAM
+		db BLIZZARD
+		db PSYCHIC_M
+		db GHOST_HAMMER
+
+	db 83, UMBREON
+		db PSYCHIC_M
+		db TOXIC
+		db DARK_PULSE
+		db CONFUSE_RAY
+
+	db -1

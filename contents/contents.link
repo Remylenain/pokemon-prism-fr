@@ -1,0 +1,12 @@
+INCLUDE "contents/homebank.link"
+INCLUDE "contents/romx.link"
+INCLUDE "contents/wram.link"
+INCLUDE "contents/sram.link"
+
+VRAM 0
+	"VRAM0"
+VRAM 1
+	"VRAM1"
+
+HRAM
+	"HRAM"

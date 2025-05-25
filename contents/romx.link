@@ -1,0 +1,503 @@
+ROMX $01
+	"Code 1"
+	"Intro menu"
+	"Map Objects"
+
+ROMX $02
+	"Code 2"
+
+ROMX $03
+	"Sprites 1"
+	"Map block data small 2"
+	"DED small 1"
+	"Item Effects"
+
+ROMX $04
+	"Code 3"
+	"Crash"
+
+ROMX $05
+	"Code 4"
+	"Debug Menu"
+
+ROMX $06
+	"Pokemon Overworld Sprites 1"
+
+ROMX $07
+	"Battle Tower data"
+	"Roofs"
+	"Pic Animation Frames 3"
+
+ROMX $08
+	align 8
+	"Demo Sine"
+	"Code 5"
+	"Tilesets 1"
+
+ROMX $09
+	"Code 6"
+	"Songs small 13"
+	"Effect Commands (extra)"
+
+ROMX $0A
+	"Code 7"
+	"Pokemon Overworld Sprites 2"
+	"Map Scripts small 2"
+
+ROMX $0B
+	"Code 8"
+	"DED small 2"
+	"Emote Bubble GFX"
+
+ROMX $0C
+	"Tilesets 2"
+	"Map Scripts small 4"
+
+ROMX $0D
+	"Effect Commands (main)"
+	"Map Scripts small 3"
+
+ROMX $0E
+	"Code 9"
+	"Map Scripts 1"
+	"DED small 7"
+
+ROMX $0F
+	"Battle Core"
+	"Copyright GFX"
+
+ROMX $10
+	"Code 10"
+	"Evolution"
+
+ROMX $11
+	"Code 11"
+	"Songs 1"
+
+ROMX $12
+	"Code 12"
+	"Map Scripts 2"
+	"Pachisi"
+
+ROMX $13
+	"Code 13"
+	"Tilesets 3"
+	"Pics small 2"
+
+ROMX $14
+	"Code 14"
+	"Songs 2"
+	"Base Data"
+	"Debug Battle Tower"
+
+ROMX $15
+	"Map Scripts 3"
+	"Battle Tower Map Scripts"
+	"Judge Text"
+
+ROMX $16
+	"Songs 8"
+	"DED small 4"
+
+ROMX $17
+	"Pic Pointers"
+	"Map Scripts 5"
+
+ROMX $18
+	"Code 15"
+	"Map Scripts 6"
+	"Pokeicons 1"
+	"Park Minigame"
+
+ROMX $19
+	"Map Scripts 7"
+	"Pokemon Overworld Sprites small 1"
+
+ROMX $1A
+	"Map Scripts 8"
+	"Pokemon Overworld Sprites 3"
+
+ROMX $1B
+	"Map Scripts 9"
+	"Pics small 3"
+
+ROMX $1C
+	"Map Scripts 10"
+	"Pokeicons pointers"
+	"Pics small 7"
+
+ROMX $1D
+	"Map Scripts 11"
+	"Map Scripts Laurel Forest Pokemon Only"
+
+ROMX $1E
+	"Code 16"
+	"Map Scripts 12"
+
+ROMX $1F
+	"Map block data 2"
+	"Map Scripts 13"
+	"DED small 5"
+
+ROMX $20
+	"DED small 6"
+	"Map block data 3"
+	"Pokemon Overworld Sprites 4"
+	"Player Sprites 2"
+
+ROMX $21
+	"Pics 1"
+
+ROMX $22
+	"Songs 3"
+	"Songs small 2"
+	"Tilesets 4"
+
+ROMX $23
+	"Code 17"
+	"Map Scripts small 5"
+	"Sprites"
+
+ROMX $24
+	"Songs 4"
+	"Cries"
+
+ROMX $25
+	"Map Headers"
+	"Map Events"
+	"Text 1"
+	"Standard Text"
+
+ROMX $26
+	"Code 18"
+	"Songs small 3"
+	"Songs small 4"
+	"Second Map Headers"
+	"Battle Tower code"
+
+ROMX $27
+	"Songs 5"
+	"Map Scripts small 6"
+	"Intro Movie"
+	"Name Rater and Time Capsule Conversion"
+
+ROMX $28
+	"Code 19"
+	"Map Scripts 14"
+	"Player Sprites 1"
+
+ROMX $29
+	"Songs small 5"
+	"DED 1"
+
+ROMX $2A
+	"Map block data 4"
+
+ROMX $2B
+	"Map block data 5"
+	"Pokeicons 2"
+
+ROMX $2C
+	"Code 20"
+	"DED small 8"
+	"Map block data 6"
+
+ROMX $2D
+	"Code 21"
+	"Tilesets 7"
+
+ROMX $2E
+	"Pokeicons 3"
+
+ROMX $2F
+	"Pokemon Overworld Sprites 5"
+
+ROMX $30
+	"Map Scripts small 7"
+	"Sprites 3"
+	"Daycare"
+
+ROMX $31
+	"Pics small 4"
+	"Sprites 4"
+	"Bingo"
+
+ROMX $32
+	"Code 22"
+	"Songs small 8"
+	"Sprites 2"
+	"Sprites small 1"
+
+ROMX $33
+	"Code 23"
+	"Move Animations"
+
+ROMX $34
+	"Pic Animations"
+	"Pic Animation Frames 1"
+	"Map Scripts small 8"
+	"Nickname Errors"
+
+ROMX $35
+	"Code 24"
+	"Pic Animation Frames 2"
+	"Link Helpers"
+
+ROMX $36
+	align 8
+	"Tile collision table"
+	"Map block data 7"
+	"Pics 2"
+	"Battle Animation GFX"
+
+ROMX $37
+	"Songs 10"
+
+ROMX $38
+	"Code 25"
+	"DED small 9"
+	"Pic Animation Frames 4"
+
+ROMX $39
+	"Tilesets 8"
+	"Songs small 9"
+	"Map Scripts small 9"
+	"Signpost GFX"
+
+ROMX $3A
+	"Audio"
+	"Tilesets 5"
+
+ROMX $3B
+	"Songs 6"
+
+ROMX $3C
+	"Code 26"
+	"Battle Text"
+	"Sound Effects 1"
+
+ROMX $3D
+	"Map Scripts 4"
+	"Map block data 10"
+	"Font GFX"
+	"Songs small 10"
+
+ROMX $3E
+	"DED small 10"
+	"Pokedex Entries 001-064"
+	"Tilesets 6"
+
+ROMX $3F
+	"DED"
+	"NPC Trades"
+	"Pokedex Entries 065-254"
+
+ROMX $40
+	"Code 27"
+	"DED 2"
+	"Pics 3"
+
+ROMX $41
+	"Misc GFX"
+	"Songs 7"
+	"Songs small 1"
+	"Songs small 11"
+
+ROMX $42
+	"Code 28"
+	"Sprites 5"
+	"Pics small 5"
+
+ROMX $43
+	"Code 29"
+	"Map block data 8"
+	"Tilesets 9"
+	"Pokemon Overworld Sprites small 2"
+	"Pokemon Sprite Pointers"
+	"Pics small 8"
+
+ROMX $44
+	"Pokeicons 4"
+	"Sprites small 2"
+	"DED small 11"
+	"Battle Arcade"
+	"Gold Tokens"
+	"RTC code"
+
+ROMX $45
+	"Pics 4"
+	"Songs small 7"
+	"Card Games"
+	"Marts"
+
+ROMX $46
+	"Pics 5"
+	"Songs small 6"
+
+ROMX $47
+	"Pics 6"
+
+ROMX $48
+	"Pics 7"
+
+ROMX $49
+	"Pics 8"
+
+ROMX $4A
+	"Map Scripts small 10"
+	"Pics 9"
+
+ROMX $4B
+	"Pics 10"
+
+ROMX $4C
+	"Pics 11"
+
+ROMX $4D
+	"Pics 12"
+
+ROMX $4E
+	"Map block data small 1"
+	"Pics 13"
+
+ROMX $4F
+	"Pics 14"
+
+ROMX $50
+	"Pics 15"
+	"Field Moves"
+
+ROMX $51
+	"Code 30"
+	"Pics 16"
+	"DED small 3"
+
+ROMX $52
+	"Pics 17"
+	"End GFX"
+
+ROMX $53
+	"Pics 18"
+	"Songs small 12"
+
+ROMX $54
+	"Pics 19"
+	"Pokemon Overworld Sprites small 3"
+	"Sprites small 3"
+
+ROMX $55
+	"Pics 20"
+
+ROMX $56
+	"Map Scripts small 11"
+	"Pics 21"
+
+ROMX $57
+	"Player Pics"
+	"Repel"
+
+ROMX $58
+	"DED 3"
+
+ROMX $59
+	"DED 4"
+	"Sprites small 4"
+
+ROMX $5A
+	"DED 5"
+	"Songs small 14"
+
+ROMX $5B
+	"DED 6"
+	"Battle Miscellaneous Functions"
+
+ROMX $5C
+	"Sound Effects 2"
+	"DED 7"
+
+ROMX $5D
+	"DED 8"
+	"Pics small 1"
+
+ROMX $5E
+	"DED 9"
+
+ROMX $5F
+	"DED 10"
+
+ROMX $60
+	"DED 11"
+
+ROMX $61
+	"DED 12"
+
+ROMX $62
+	"DED 13"
+
+ROMX $63
+	"DED 14"
+
+ROMX $64
+	"DED 15"
+
+ROMX $65
+	"DED 16"
+
+ROMX $66
+	"DED 17"
+	"Map Scripts small 12"
+
+ROMX $67
+	"DED 18"
+	"Trainer Pic Pointers"
+
+ROMX $68
+	"DED 19"
+
+ROMX $69
+	"DED 20"
+
+ROMX $6A
+	"DED 21"
+
+ROMX $6B
+	"DED 22"
+
+ROMX $6C
+	"DED 23"
+	"Map block data 9"
+
+ROMX $6D
+	"DED 24"
+
+ROMX $6E
+	"DED 25"
+
+ROMX $6F
+	"DED 26"
+	"Map Scripts 15"
+
+ROMX $70
+	"DED 27"
+	"Font code"
+
+ROMX $71
+	"Code 31"
+	"Pics small 6"
+	"Player Movement"
+
+ROMX $72
+	"Map Scripts 16"
+	"Text 2"
+
+ROMX $73
+	"Tilesets 10"
+
+ROMX $74
+	"Tilesets 11"
+	"Enemy Trainers"
+
+ROMX $75
+	"Songs 9"
+	"Map block data 1"
+	"Map Scripts small 1"

@@ -1,0 +1,39 @@
+ApplyPrismPatch:
+	seek #zero
+	set #address, PrismPatch
+	set #banks, BANKS
+.loop
+	gethalfwordinc #length, #address
+	xordata #address, #length
+	add #address, #length
+	subtract #length, BANK_SIZE, #length
+	fillbyte #length, 0xff
+	decrement #banks
+	jumpnz #banks, .loop
+	truncatepos
+	return
+
+PatchPrismToPrism:
+	ifne #source, 3, .release
+	set #address, ReleasePatch
+	call ApplyIPSPatch
+.release
+	callnz #target, ConvertPrismVersion
+	jump ValidatePatchResults
+
+ConvertCrystalVersion:
+	set #address, CrystalPatch
+	jump ApplyIPSPatch
+
+ConvertPrismVersion:
+	ifeq #target, 2, ApplyGBSPatch
+	; fallthrough
+
+MakeDebugVersion:
+	set #address, DebugPatch
+	; fallthrough
+
+ApplyIPSPatch:
+	seek #zero
+	ipspatch #result, #address
+	return

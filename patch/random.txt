@@ -1,0 +1,113 @@
+Random:
+	; this is equivalent to Prism's StableRandom call, only that it uses a fixed seed location (#lowseed, #highseed); implementation is the same
+
+	; push some registers so we can use them as temporary (we'll also use #result as temporary)
+	push #3
+	push #2
+	push #1
+
+	; split high seed into four byte-sized registers
+	set #result, 0xff
+	and #3, #highseed, #result
+	shiftright #highseed, 8
+	and #2, #highseed, #result
+	shiftright #highseed, 8
+	and #1, #highseed, #result
+	shiftright #highseed, 8
+
+	; update low seed
+	callz #lowseed, .reseed_low
+	shiftright #result, #lowseed, 8
+	xor #lowseed, #result
+	shiftleft #result, #lowseed, 9
+	xor #lowseed, #result
+	shiftright #result, #lowseed, 23
+	xor #lowseed, #result
+
+	; update MWC part
+	remainder #3, 210
+	add #result, #1, #2
+	add #result, #3
+	callz #result, .reseed_high
+	subtract #result, 719 ;209, 255, 255 is an invalid combination, and also the only one that can add up to 719
+	callz #result, .reseed_high
+	mulacum #3, #1, 210
+	set #1, #2
+	and #2, #3, 0xff
+	shiftright #3, 8
+
+	call .update_linear
+
+	; preserve the linear value and reassemble the high seed
+	set #result, #highseed
+	shiftleft #highseed, 8
+	or #highseed, #1
+	shiftleft #highseed, 8
+	or #highseed, #2
+	shiftleft #highseed, 8
+	or #highseed, #3
+
+	; extract two 2-bit fields from the linear value (ensure we keep #2 since we'll need it later)
+	shiftright #1, #result, 6
+	shiftright #3, #result, 4
+	and #3, 3
+
+	; use the first of those 2-bit fields to select a byte from the low seed (we don't need to clamp to 8 bits here; that's done at the end)
+	shiftleft #1, 3
+	shiftright #1, #lowseed, #1
+
+	; use the 2-bit value in #3 to determine how to combine #1 and #2
+	call .combine_values
+
+	; clamp to 8 bits and we're done
+	and #result, 0xff
+	pop #1
+	pop #2
+	pop #3
+	return
+
+.reseed_low
+	call .update_linear
+	set #lowseed, #highseed
+	set #result, 3
+.reseed_low_loop
+	call .update_linear
+	shiftleft #lowseed, 8
+	or #lowseed, #highseed
+	decrement #result
+	jumpnz #result, .reseed_low_loop
+	return
+
+.reseed_high
+	call .update_linear
+	set #1, #highseed
+	call .update_linear
+	remainder #3, #highseed, 210
+	call .update_linear
+	set #2, #highseed
+	return
+
+.update_linear
+	multiply #highseed, 73
+	add #highseed, 29
+	and #highseed, 0xff
+	return
+
+.combine_values
+	jumptable #3
+	dw .add_values
+	dw .xor_values
+	dw .subtract_values
+	dw .subtract_backwards
+.add_values
+	add #result, #1, #2
+	return
+.xor_values
+	xor #result, #1, #2
+	return
+.subtract_values
+	subtract #result, #1, #2
+	return
+.subtract_backwards
+	subtract #result, #2, #1
+	return

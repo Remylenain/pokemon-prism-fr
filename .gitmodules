@@ -1,0 +1,8 @@
+[submodule "utils/bsp"]
+	path = utils/bsp
+	url = https://github.com/aaaaaa123456789/bsp.git
+	branch = master
+[submodule "utils/lz"]
+	path = utils/lz
+	url = https://github.com/aaaaaa123456789/lzcomp
+	branch = master

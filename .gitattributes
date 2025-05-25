@@ -1,0 +1,31 @@
+# Auto detect text files and perform LF normalization
+* text eol=lf
+
+# Explicitly declare text files you want to always be normalized and converted
+# to native line endings on checkout.
+*.asm text
+*.pal text
+*.py text
+*.txt text
+*.cfg text
+*.c text
+*.h text
+*.patch text
+*.py text
+*.sh text
+*.link text
+Makefile text
+
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.lz binary
+*.xbpp binary
+*.2bpp binary
+*.1bpp binary
+*.bin binary
+*.ablk binary
+*.wav binary
+*.ded binary
+*.tilemap binary
+*.ips binary
+*.gif binary

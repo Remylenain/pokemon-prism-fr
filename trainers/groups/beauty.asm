@@ -1,0 +1,85 @@
+BeautyGroup:
+	; 1
+	db "Veronica@"
+
+	db TRAINERTYPE_NORMAL
+
+	db 15, CACNEA
+	db 16, SHROOMISH
+	db 17, TANGELA
+	db -1
+
+	; 2
+	db "Michelle@"
+
+	db TRAINERTYPE_NORMAL
+
+	db 17, VOLBEAT
+	db 17, WIGGLYTUFF
+	db -1
+
+	; 3
+	db "Victoria@"
+
+	db TRAINERTYPE_NORMAL
+
+	db 76, FURRET
+	db 76, WIGGLYTUFF
+	db 78, PIDGEOT
+	db -1
+
+	; 4
+	db "Bridget@"
+
+	db TRAINERTYPE_NORMAL
+
+	db 77, WIGGLYTUFF
+	db 79, LOPUNNY
+	db -1
+
+	; 5
+	db "Camry@"
+
+	db TRAINERTYPE_NORMAL
+
+	db 36, TORKOAL
+	db 37, TORKOAL
+	db 38, ARIADOS
+	db -1
+
+	; 6
+	db "Ginger@"
+
+	db TRAINERTYPE_MOVES
+
+	db 80, WAILORD
+		db HYDRO_PUMP
+		db BLIZZARD
+		db SUBSTITUTE
+		db BODY_SLAM
+
+	db 80, TYPHLOSION
+		db LAVA_POOL
+		db FIRE_BLAST
+		db THUNDERPUNCH
+		db RETURN
+
+	db 80, LANTURN
+		db VAPORIZE
+		db THUNDERBOLT
+		db RAIN_DANCE
+		db THUNDER
+
+	db 80, VENUSAUR
+		db SPRING_BUDS
+		db GIGA_DRAIN
+		db SLEEP_POWDER
+		db GROWTH
+
+	db 80, BLISSEY
+		db SUBSTITUTE
+		db SOFTBOILED
+		db PSYCHIC_M
+		db TOXIC
+
+	db -1

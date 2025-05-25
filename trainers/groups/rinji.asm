@@ -1,0 +1,50 @@
+RinjiGroup:
+	; 1
+	db "Rinji@"
+
+	db TRAINERTYPE_MOVES
+
+	db 17, LOMBRE
+		db ASTONISH
+		db WATER_GUN
+		db ABSORB
+		db GROWL
+
+	db 18, TANGELA
+		db GROWTH
+		db ABSORB
+		db POISONPOWDER
+		db VINE_WHIP
+
+	db 21, IVYSAUR
+		db CUT
+		db RAZOR_LEAF
+		db POISONPOWDER
+		db LEECH_SEED
+
+	db -1
+
+	; 2
+	db "Rinji@"
+
+	db TRAINERTYPE_MOVES
+
+	db 49, LUDICOLO
+		db SURF
+		db GIGA_DRAIN
+		db HAIL
+		db BLIZZARD
+
+	db 51, TANGROWTH
+		db SLEEP_POWDER
+		db SUNNY_DAY
+		db EARTHQUAKE
+		db SPRING_BUDS
+
+	db 52, VENUSAUR
+		db TOXIC
+		db SOLARBEAM
+		db SUNNY_DAY
+		db SPRING_BUDS
+
+	db -1

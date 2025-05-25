@@ -1,0 +1,103 @@
+PrintWithLeadingZeros:
+	; prints number #1 in #2 digits, with leading zeros
+	push -0x30 ;so it will become 0 when 0x30 is added to it
+	increment #2
+	jump .handle_loop
+.push_loop
+	remainder #temp, #1, 10
+	divide #1, 10
+	push #temp
+.handle_loop
+	decrement #2
+	jumpnz #2, .push_loop
+.pop_loop
+	pop #temp
+	add #temp, 0x30 ;0x30 is ASCII for '0'
+	retz #temp
+	bufchar #temp
+	jump .pop_loop
+
+YesNoMenu:
+	dw .yes
+	dw .no
+	dw -1
+.yes
+	string "Yes"
+.no
+	string "No"
+
+FlagAction:
+	; current file pointer: flag array
+	; #1: flag number
+	; #2: action (0: clear, 1: set, 2: toggle, >2: none)
+	; returns old value
+	pushpos
+	shiftright #temp, #1, 3
+	seekfwd #temp
+	getfilebyte #temp
+	and #1, 7
+	shiftright #result, #temp, #1
+	and #result, 1
+	shiftleft #1, 1, #1
+	ifgt #2, 2, .done
+	jumptable #2
+	dw .clear
+	dw .set
+	dw .toggle
+
+.clear
+	jumpz #result, .done
+.toggle
+	xor #temp, #1
+	jump .write
+
+.set
+	or #temp, #1
+.write
+	writebyte #temp
+.done
+	poppos
+	return
+
+IsInArray:
+	; #1: array, 0xff-terminated
+	; #2: value
+	; returns 0 if not, or the position (1-based) if it is
+	set #result, #zero
+.loop
+	increment #result
+	getbyteinc #temp, #1
+	ifeq #temp, 0xff, .nope
+	subtract #temp, #2
+	retz #temp
+	jump .loop
+.nope
+	set #result, #zero
+	return
+
+InitializeRandomState:
+	call CalculateSHA1
+	set #lowseed, #1
+	set #highseed, #2
+	call Random
+	set #1, #result
+	call Random
+	set #2, #result
+	xor #lowseed, #3
+	xor #highseed, #4
+	call Random
+	shiftleft #1, 8
+	or #1, #result
+	call Random
+	shiftleft #2, 8
+	or #2, #result
+	shiftleft #1, 16
+	or #1, #2
+	xor #lowseed, #5
+	xor #highseed, #1
+	set #3, 6
+.loop
+	call Random
+	decrement #3
+	jumpnz #3, .loop
+	return

@@ -1,0 +1,124 @@
+GetGameDataPointer:
+	add #result, #1, sGameData
+	ifeq #savefile, 1, .done
+	add #result, #1, sBackupGameData
+.done
+	return
+
+EventFlagPatch:
+	; #1: list of event flag numbers, terminated by -1
+	; #2: action (0: clear, 1: set, 2: toggle)
+	set #address, #1
+	set #1, EVENT_FLAGS_OFFSET
+	call GetGameDataPointer
+	seek #result
+	jump .handle_loop
+.loop
+	push #2
+	call FlagAction
+	pop #2
+.handle_loop
+	gethalfwordinc #1, #address
+	ifne #1, 0xffff, .loop
+	return
+
+EventFlagCheck:
+	; #1: list of event flag numbers, terminated by -1
+	; #2: kind of check (0: any, nonzero: all)
+	jumpz #2, .ok
+	set #2, 1
+.ok
+	set #address, #1
+	set #1, EVENT_FLAGS_OFFSET
+	call GetGameDataPointer
+	seek #result
+	set #result, #2
+	jump .handle_loop
+.loop
+	push #2
+	set #2, -1
+	call FlagAction
+	pop #2
+	ifne #result, #2, .done
+.handle_loop
+	gethalfwordinc #1, #address
+	ifne #1, 0xffff, .loop
+.done
+	return
+
+FixSavefileChecksum:
+	set #1, #zero
+	call GetGameDataPointer
+	seek #result
+	call CalculateSavefileChecksum
+	seek sChecksum
+	ifeq #savefile, 1, .ok
+	seek sBackupChecksum
+.ok
+	writehalfword #result
+	subtract #1, sExtraData, sGameData
+	call GetGameDataPointer
+	seek #result
+	call CalculateExtraChecksum
+	seek sExtraChecksum
+	ifeq #savefile, 1, .extra_ok
+	seek sBackupExtraChecksum
+.extra_ok
+	writehalfword #result
+	return
+
+ClearSingleEventFlag:
+	push #1
+	set #1, EVENT_FLAGS_OFFSET
+	call GetGameDataPointer
+	seek #result
+	pop #1
+	set #2, #zero
+	call FlagAction
+	jump FixSavefileChecksum
+
+CountEventFlags:
+	push #a
+	push #b
+	set #a, #1
+	set #1, EVENT_FLAGS_OFFSET
+	call GetGameDataPointer
+	seek #result
+	set #b, #zero
+.loop
+	gethalfwordinc #1, #a
+	ifeq #1, 0xffff, .done
+	set #2, #a ; #a is > 2 here
+	call FlagAction
+	jumpz #result, .loop
+	increment #b
+	jump .loop
+.done
+	set #result, #b
+	pop #b
+	pop #a
+	return
+
+ShiftSaveDataBack:
+	; #1: count, #2: amount
+	retz #1
+	seekfwd #2
+	getfilebyte #temp
+	seekback #2
+	writebyte #temp
+	decrement #1
+	jump ShiftSaveDataBack
+
+ShiftSaveDataForward:
+	; #1: count, #2: amount, #3: starting offset
+	add #3, #1
+	increment #1
+.loop
+	seek #3
+	getfilebyte #temp
+	seekfwd #2
+	writebyte #temp
+	decrement #3
+	decrement #1
+	jumpnz #1, .loop
+	return
