@@ -355,8 +355,8 @@ SuperPotionDesc:
 	done
 
 PotionDesc:
-	ctxt "Restores #mon"
-	next "HP by 20."
+	ctxt "Restaure 20PV"
+	next "d'un #mon."
 	done
 
 EscapeRopeDesc:
