@@ -6,7 +6,10 @@ files=(
   "items/item_names.asm"
 )
 
-echo "🔍 Vérification des noms mal formatés (doivent être Majuscule + minuscules)..."
+# Longueur maximale d’un nom (modifiable si besoin)
+MAX_LENGTH=10
+
+echo "🔍 Vérification des noms (format + longueur max ${MAX_LENGTH})..."
 echo
 
 error_found=false
@@ -17,15 +20,19 @@ for file in "${files[@]}"; do
     continue
   fi
 
+  linenum=0
   while IFS= read -r line || [[ -n "$line" ]]; do
-    # Supprime les commentaires
+    ((linenum++))
     clean_line=$(echo "$line" | cut -d';' -f1 | xargs)
 
-    # Cherche une chaîne entre guillemets
     if [[ "$clean_line" =~ \"([^\"]+)\" ]]; then
       name="${BASH_REMATCH[1]}"
       if [[ ! "$name" =~ ^[A-Z][a-zéèêàùîçäëïôöü\-]*$ ]]; then
-        echo "❌ Mauvais format : \"$name\" dans $file"
+        echo "❌ Format invalide : \"$name\" dans $file (ligne $linenum)"
+        error_found=true
+      fi
+      if [[ ${#name} -gt $MAX_LENGTH ]]; then
+        echo "⚠️  Trop long : \"$name\" (${#name} caractères) dans $file (ligne $linenum)"
         error_found=true
       fi
     fi
@@ -33,5 +40,5 @@ for file in "${files[@]}"; do
 done
 
 if ! $error_found; then
-  echo "✅ Tous les noms sont bien formatés !"
+  echo "✅ Tous les noms sont bien formatés et dans les limites de longueur !"
 fi
