@@ -298,8 +298,8 @@ ThunderpunchDescription:
 	done
 
 ScratchDescription:
-	ctxt "Scratches with"
-	next "sharp claws."
+	ctxt "Lacere avec"
+	next "des griffes."
 	done
 
 BulkUpDescription:
