@@ -7,7 +7,7 @@
 	add_name "Fire Punch"
 	add_name "Ice Punch"
 	add_name "ThunderPunch"
-	add_name "Scratch"
+	add_name "Griffe"
 	add_name "Fairy Wind"
 	add_name "DrainingKiss"
 	add_name "Iron Defense"
